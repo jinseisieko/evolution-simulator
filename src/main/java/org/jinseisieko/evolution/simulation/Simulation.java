@@ -7,6 +7,5 @@ public interface Simulation
 {
     public void update(double deltaTime);
     public void draw(Graphics2D g2d);
-
 }
 
