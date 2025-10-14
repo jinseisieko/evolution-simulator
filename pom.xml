@@ -37,7 +37,7 @@
                                     <mainClass>org.jinseisieko.evolution.Main</mainClass>
                                 </transformer>
                             </transformers>
-                        </configuration>zz
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
