@@ -1,4 +1,4 @@
-// src/main/java/org/jinseisieko/simulation.Simulation.java
+// src/main/java/org/jinseisieko/simulation/Simulation.java
 package org.jinseisieko.evolution.simulation;
 
 import java.awt.Graphics2D;
