@@ -37,6 +37,7 @@ public class Point {
     public void setY(double y) {
         this.y = norm(y);
     }
+    
     /**
      * Adds another point to this one using toroidal (mod 1) arithmetic.
      * <p>
