@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
-
+// src/main/java/org/jinseisieko/evolution/basic/Colored.java
 package org.jinseisieko.evolution.basic;
 
 import java.awt.Color;
