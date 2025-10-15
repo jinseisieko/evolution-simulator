@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SimulationView extends JPanel {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    private static final int WINDOW_WIDTH = 800;
+    private static final int WINDOW_HEIGHT = 600;
 
     private final Simulation simulation;
     private final JFrame frame;
@@ -21,7 +21,7 @@ public class SimulationView extends JPanel {
     public SimulationView(Simulation simulation, JFrame frame) {
         this.simulation = simulation;
         this.frame = frame;
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setBackground(Color.WHITE);
 
         // Запуск игрового цикла
@@ -35,7 +35,7 @@ public class SimulationView extends JPanel {
             // FPS
             frameCount++;
             if (System.currentTimeMillis() - lastFpsTime >= 1000) {
-                frame.setTitle("Эволюционный симулятор — FPS: " + frameCount);
+                frame.setTitle("Evolution simulator — FPS: " + frameCount);
                 frameCount = 0;
                 lastFpsTime = System.currentTimeMillis();
             }
@@ -59,5 +59,9 @@ public class SimulationView extends JPanel {
         simulation.draw(g2d);
 
         g2d.dispose();
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 }
