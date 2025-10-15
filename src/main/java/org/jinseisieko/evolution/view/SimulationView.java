@@ -47,18 +47,18 @@ public class SimulationView extends JPanel {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(
+    protected void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+        Graphics2D graphics2D = (Graphics2D) graphics.create();
+        graphics2D.setRenderingHint(
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON
         );
 
         // Делегируем отрисовку модели (или рисуем здесь, если модель не знает о графике)
-        simulation.draw(g2d);
+        simulation.draw(graphics2D);
 
-        g2d.dispose();
+        graphics2D.dispose();
     }
 
     public JFrame getFrame() {
