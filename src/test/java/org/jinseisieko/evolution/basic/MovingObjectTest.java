@@ -61,7 +61,8 @@ class MovingObjectTest {
     @Test
     void constructorWithNullPoint_shouldThrowExceptionWithMessage() {
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
-            new MovingObject((Point) null);
+            MovingObject obj = new MovingObject((Point) null);
+            obj.shift(0.0, 0.0);
         });
         assertNotNull(ex.getMessage());
         assertFalse(ex.getMessage().isBlank());
