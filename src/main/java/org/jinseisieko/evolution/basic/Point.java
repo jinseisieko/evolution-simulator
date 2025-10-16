@@ -129,6 +129,48 @@ public class Point {
     }
 
     /**
+     * Computes the shortest Euclidean distance from this point to another point
+     * in the 2D toroidal space [0,1) × [0,1).
+     * <p>
+     * Due to the periodic boundary conditions, the distance accounts for wrap-around:
+     * moving past 1.0 in any direction wraps to 0.0, and vice versa.
+     * The result is the minimal possible distance considering all toroidal paths.
+     *
+     * @param other the target point to measure distance to <p>
+     * @return the toroidal Euclidean distance between this point and {@code other} <p>
+     * 
+     * @author jinseisieko
+     */
+    public double distanceTo(Point other) {
+        return Point.distanceBetween(this, other);
+    }
+
+    /**
+     * Computes the shortest Euclidean distance between two points in the 2D toroidal space [0,1) × [0,1).
+     * <p>
+     * This static method calculates distance while respecting periodic boundaries:
+     * the space wraps around at 0.0 and 1.0 in both dimensions, so the shortest path
+     * may cross the edge of the unit square.
+     *
+     * @param point1 the first point <p>
+     * @param point2 the second point <p>
+     * @return the toroidal Euclidean distance between {@code point1} and {@code point2} <p>
+     * @throws IllegalArgumentException if either {@code point1} or {@code point2} is {@code null} <p>
+     * 
+     * @author jinseisieko
+     */
+    static public double distanceBetween(Point point1, Point point2) {
+        if (point1 == null || point2 == null) {
+            throw new IllegalArgumentException("points cannot be null");
+        }
+        double dx = norm(point2.x - point1.x);
+        double dy = norm(point2.y - point1.y);
+        dx = Math.min(dx, 1.0 - dx);
+        dy = Math.min(dy, 1.0 - dy);
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    /**
      * Normalizes a coordinate to the [0, 1) interval, accounting for toroidal periodicity.
      * <p>
      * Examples: norm(1.3) = 0.3, norm(-0.2) = 0.8.

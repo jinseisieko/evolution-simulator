@@ -153,7 +153,7 @@ class MovingObjectTest {
 
     /**
      * Ensures that {@code shift(null)} throws an {@link IllegalArgumentException}
-     * with a non-empty, descriptive message.
+     * with a non-empty message.
      */
     @Test
     void shiftWithNull_shouldThrowExceptionWithMessage() {

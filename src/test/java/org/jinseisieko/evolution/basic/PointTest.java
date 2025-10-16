@@ -179,4 +179,146 @@ class PointTest {
         assertEquals(0.0, p.getX(), 1e-12);
         assertEquals(0.0, p.getY(), 1e-12);
     }
+
+    // === Test distance methods ===
+
+    /**
+     * Validates that {@code distanceTo()} computes the shortest Euclidean distance
+     * from a given point to the origin (0,0) in the 2D toroidal space [0,1) × [0,1).
+     * <p>
+     * The test verifies correct handling of periodic boundaries: when the direct
+     * distance exceeds 0.5 in any dimension, the method must consider the wrapped
+     * path (e.g., distance from 0.8 to 0.0 is 0.2, not 0.8). All test cases use
+     * precomputed minimal distances that respect toroidal geometry.
+     */
+    @ParameterizedTest
+    @CsvSource({
+        "0.3, 0.0, 0.3",
+        "0.0, 0.25, 0.25",
+        "0.8, 0.0, 0.2",
+        "0.0, 0.74, 0.26",
+        "0.9, 0.9, 0.1414213562373095",
+        "0.5, 0.5, 0.7071067811865476",
+        "0.0, 0.0, 0.0"
+    })
+    void distanceTo_origin(double x, double y, double expectedDistance)
+    {
+        Point point = new Point(x, y);
+        double distance = point.distanceTo(new Point(0.0, 0.0));
+        assertEquals(distance, expectedDistance, 1e-12);
+    }
+
+    /**
+     * Confirms that the toroidal distance is symmetric: the distance from A to B
+     * equals the distance from B to A. This property must hold in any metric space,
+     * including the toroidal one.
+     */
+    @ParameterizedTest
+    @CsvSource({
+        "0.1, 0.2, 0.4, 0.5",
+        "0.9, 0.1, 0.2, 0.8",
+        "0.3, 0.7, 0.6, 0.2",
+        "0.0, 0.0, 0.5, 0.5",
+        "0.8, 0.9, 0.1, 0.1"
+    })
+    void distanceTo_isSymmetric(double x1, double y1, double x2, double y2) {
+        Point a = new Point(x1, y1);
+        Point b = new Point(x2, y2);
+        double d1 = a.distanceTo(b);
+        double d2 = b.distanceTo(a);
+        assertEquals(d1, d2, 1e-12);
+    }
+
+    /**
+     * Ensures that the static method {@code distanceBetween} produces identical results
+     * to the instance method {@code distanceTo} for the same pair of points.
+     * This guarantees consistency between the two APIs.
+     */
+    @ParameterizedTest
+    @CsvSource({
+        "0.1, 0.2, 0.4, 0.5",
+        "0.9, 0.1, 0.2, 0.8",
+        "0.3, 0.7, 0.6, 0.2",
+        "0.0, 0.0, 0.5, 0.5",
+        "0.8, 0.9, 0.1, 0.1"
+    })
+    void distanceBetween_equalsDistanceTo(double x1, double y1, double x2, double y2) {
+        Point a = new Point(x1, y1);
+        Point b = new Point(x2, y2);
+        double d1 = a.distanceTo(b);
+        double d2 = Point.distanceBetween(a, b);
+        assertEquals(d1, d2, 1e-12);
+    }
+
+    /**
+     * Verifies that {@code distanceBetween} throws an {@link IllegalArgumentException}
+     * with a non-empty message,
+     * when either of the input points is {@code null}, ensuring robust input validation.
+     */
+    @Test
+    void distanceBetween_throwsOnNullInput() {
+        Point p = new Point(0.5, 0.5);
+        IllegalArgumentException exFirst = assertThrows(IllegalArgumentException.class, () -> {
+            Point.distanceBetween(null, p);
+        });
+        IllegalArgumentException exSecond = assertThrows(IllegalArgumentException.class, () -> {
+            Point.distanceBetween(p, null);
+        });
+        IllegalArgumentException exAll = assertThrows(IllegalArgumentException.class, () -> {
+            Point.distanceBetween(null, null);
+        });
+        assertNotNull(exFirst.getMessage());
+        assertFalse(exFirst.getMessage().isBlank());
+        assertNotNull(exSecond.getMessage());
+        assertFalse(exSecond.getMessage().isBlank());
+        assertNotNull(exAll.getMessage());
+        assertFalse(exAll.getMessage().isBlank());
+    }
+
+    /**
+     * Confirms that {@code distanceTo} throws an {@link IllegalArgumentException}
+     * when the argument is {@code null}, maintaining consistent error handling
+     * with the static counterpart {@code distanceBetween}.
+     */
+    @Test
+    void distanceTo_throwsOnNullInput() {
+        Point p = new Point(0.3, 0.7);
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+            p.distanceTo(null);
+        });
+        assertNotNull(ex.getMessage());
+        assertFalse(ex.getMessage().isBlank());
+    }
+
+    /**
+     * Validates that the distance from any point to itself is exactly zero,
+     * which is a fundamental property of any valid metric.
+     */
+    @ParameterizedTest
+    @CsvSource({
+        "0.0, 0.0",
+        "0.3, 0.4",
+        "0.8, 0.9",
+        "1.5, -0.2",  // will be normalized to (0.5, 0.8)
+        "0.5, 0.5"
+    })
+    void distanceTo_selfIsZero(double x, double y) {
+        Point p = new Point(x, y);
+        assertEquals(0.0, p.distanceTo(p), 1e-12);
+        assertEquals(0.0, Point.distanceBetween(p, p), 1e-12);
+    }
+
+    /**
+     * Checks that the maximum possible toroidal distance in [0,1) × [0,1)
+     * is √(0.5² + 0.5²) ≈ 0.7071, achieved between points like (0,0) and (0.5,0.5).
+     * No two points can be farther apart in this space.
+     */
+    @Test
+    void maximumDistance_isCorrect() {
+        Point a = new Point(0.0, 0.0);
+        Point b = new Point(0.5, 0.5);
+        double maxDist = Math.sqrt(0.5 * 0.5 + 0.5 * 0.5); // ≈ 0.7071067811865476
+        assertEquals(maxDist, a.distanceTo(b), 1e-12);
+        assertEquals(maxDist, Point.distanceBetween(a, b), 1e-12);
+    }
 }
