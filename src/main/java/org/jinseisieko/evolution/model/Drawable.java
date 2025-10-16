@@ -22,7 +22,7 @@ public interface Drawable {
     /**
      * Returns the geometric shape used to represent this object visually.
      *
-     * @return the shape type (e.g., CIRCLE, SQUARE)
+     * @return the shape type (e.g., CIRCLE, SQUARE) <p>
      */
     ShapeType getShapeType();
 
