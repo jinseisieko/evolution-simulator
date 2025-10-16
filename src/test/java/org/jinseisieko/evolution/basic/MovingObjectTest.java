@@ -1,5 +1,4 @@
 // src/test/java/org/jinseisieko/evolution/basic/MovingObjectTest.java
-
 package org.jinseisieko.evolution.basic;
 
 import org.junit.jupiter.api.Test;
@@ -12,13 +11,6 @@ import org.junit.jupiter.params.provider.CsvSource;
  * its position in a 2D toroidal space [0,1) × [0,1). The object delegates all spatial logic
  * (normalization, addition, wrapping) to the {@link Point} class and ensures encapsulation
  * through defensive copying and input validation.
- * <p>
- * Tests cover:
- * - Correct initialization and normalization of position via constructors.
- * - Safe mutation via {@code moveTo} and {@code shift} with toroidal arithmetic.
- * - Input validation (null checks) and meaningful error messages.
- * - Defensive copying in getters to prevent external mutation.
- * - Invariance under shift–inverse operations (group property of toroidal space).
  * 
  * @author jinseisieko
  */

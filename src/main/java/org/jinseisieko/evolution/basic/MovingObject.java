@@ -1,5 +1,4 @@
 // src/main/java/org/jinseisieko/evolution/basic/MovingObject.java
-
 package org.jinseisieko.evolution.basic;
 
 /**

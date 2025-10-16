@@ -12,13 +12,6 @@ import java.awt.image.BufferedImage;
  * Unit tests for the {@link DrawStyle} class, which encapsulates visual rendering attributes
  * for Java Swing's {@code Graphics2D} context. The class provides immutable, reusable styles
  * for fill color, stroke color, stroke width, and opacity.
- * <p>
- * Tests cover:
- * - Correct initialization via factory methods and builder.
- * - Immutability and defensive copying of internal state.
- * - Accurate application of style attributes to a {@code Graphics2D} context.
- * - Support for colors, gradients, textures, and transparency.
- * - Proper handling of edge cases (null inputs, invalid opacity, etc.).
  * 
  * @author jinseisieko
  */

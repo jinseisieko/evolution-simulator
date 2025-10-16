@@ -142,6 +142,9 @@ public class Point {
      * @author jinseisieko
      */
     public double distanceTo(Point other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Other point cannot be null");
+        }
         return Point.distanceBetween(this, other);
     }
 
