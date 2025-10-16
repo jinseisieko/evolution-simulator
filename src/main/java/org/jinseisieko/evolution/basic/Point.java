@@ -16,8 +16,7 @@ public class Point {
     private double x;
     private double y;
 
-    public Point(double x,double y)
-    {
+    public Point(double x,double y) {
         this.x = norm(x);
         this.y = norm(y);
     }
@@ -50,8 +49,7 @@ public class Point {
      * 
      * @author jinseisieko
      */
-    public Point addPoint(Point other)
-    {
+    public Point addPoint(Point other) {
         this.x = norm(this.x + other.x);
         this.y = norm(this.y + other.y);
         return this;
@@ -73,8 +71,7 @@ public class Point {
      * 
      * @author jinseisieko
      */
-    public Point inverse() 
-    {
+    public Point inverse() {
         double invX = norm(1.0 - this.x);
         double invY = norm(1.0 - this.y);
         if (invX < 0) invX += 1.0;
@@ -91,8 +88,7 @@ public class Point {
      *  
      * @author jinseisieko
      */
-    static public double norm(double coordinate)
-    {
+    static public double norm(double coordinate) {
         coordinate %= 1.0;
         if (coordinate < 0) coordinate += 1.0;
         return coordinate;
