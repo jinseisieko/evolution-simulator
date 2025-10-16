@@ -28,7 +28,7 @@ public class Circle extends MovingObject implements Shape {
     public Circle(Point center, double radius) {
         super(center);
         if (radius < 0) {
-            throw new IllegalArgumentException("Initial radius cannot be less than zero");
+            throw new IllegalArgumentException("Radius cannot be less than zero");
         }
         this.radius = radius;
     }
@@ -45,7 +45,7 @@ public class Circle extends MovingObject implements Shape {
     public Circle(double x, double y, double radius) {
         super(x, y);
         if (radius < 0) {
-            throw new IllegalArgumentException("Initial radius cannot be less than zero");
+            throw new IllegalArgumentException("Radius cannot be less than zero");
         }
         this.radius = Math.max(0.0, radius);
     }
