@@ -16,23 +16,72 @@ public class Point {
     private double x;
     private double y;
 
-    public Point(double x,double y) {
+    /**
+     * Constructs a point with the specified coordinates in toroidal space.
+     * <p>
+     * Both input coordinates are immediately normalized to the range [0, 1)
+     * using modular arithmetic to respect the periodic boundary conditions.
+     *
+     * @param x the initial X coordinate (any real number) <p>
+     * @param y the initial Y coordinate (any real number) <p>
+     *
+     * @author jinseisieko
+     */
+    public Point(double x, double y) {
         this.x = norm(x);
         this.y = norm(y);
     }
 
+    /**
+     * Returns the normalized X coordinate of this point.
+     * <p>
+     * The value is guaranteed to be in the interval [0, 1).
+     *
+     * @return the X coordinate in [0, 1) <p>
+     *
+     * @author jinseisieko
+     */
     public double getX() {
         return x;
     }
 
+    /**
+     * Sets the X coordinate of this point to the specified value.
+     * <p>
+     * The input is automatically normalized to the range [0, 1) to maintain
+     * consistency with the toroidal space model.
+     *
+     * @param x the new X coordinate (any real number) <p>
+     *
+     * @author jinseisieko
+     */
     public void setX(double x) {
         this.x = norm(x);
     }
 
+    /**
+     * Returns the normalized Y coordinate of this point.
+     * <p>
+     * The value is guaranteed to be in the interval [0, 1).
+     *
+     * @return the Y coordinate in [0, 1) <p>
+     *
+     * @author jinseisieko
+     */
     public double getY() {
         return y;
     }
 
+    /**
+     * Sets the Y coordinate of this point to the specified value.
+     * <p>
+     * The input is automatically normalized to the range [0, 1) to maintain
+     * consistency with the toroidal space model.
+     *
+     * @param y the new Y coordinate (any real number) <p>
+     *
+     * @author jinseisieko
+     */
     public void setY(double y) {
         this.y = norm(y);
     }
@@ -44,8 +93,8 @@ public class Point {
      * the periodic boundary conditions of the torus. This operation modifies
      * the current point.
      *
-     * @param other the point to add
-     * @return this point, after the addition (for method chaining)
+     * @param other the point to add <p>
+     * @return this point, after the addition (for method chaining) <p>
      * 
      * @author jinseisieko
      */
@@ -67,7 +116,7 @@ public class Point {
      * in the periodic space of the torus.
      *
      * @return a new {@code Point} representing the inverse of this point;
-     *         the original point is unchanged.
+     *         the original point is unchanged. <p>
      * 
      * @author jinseisieko
      */
@@ -80,11 +129,57 @@ public class Point {
     }
 
     /**
+     * Computes the shortest Euclidean distance from this point to another point
+     * in the 2D toroidal space [0,1) × [0,1).
+     * <p>
+     * Due to the periodic boundary conditions, the distance accounts for wrap-around:
+     * moving past 1.0 in any direction wraps to 0.0, and vice versa.
+     * The result is the minimal possible distance considering all toroidal paths.
+     *
+     * @param other the target point to measure distance to <p>
+     * @return the toroidal Euclidean distance between this point and {@code other} <p>
+     * 
+     * @author jinseisieko
+     */
+    public double distanceTo(Point other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Other point cannot be null");
+        }
+        return Point.distanceBetween(this, other);
+    }
+
+    /**
+     * Computes the shortest Euclidean distance between two points in the 2D toroidal space [0,1) × [0,1).
+     * <p>
+     * This static method calculates distance while respecting periodic boundaries:
+     * the space wraps around at 0.0 and 1.0 in both dimensions, so the shortest path
+     * may cross the edge of the unit square.
+     *
+     * @param point1 the first point <p>
+     * @param point2 the second point <p>
+     * @return the toroidal Euclidean distance between {@code point1} and {@code point2} <p>
+     * @throws IllegalArgumentException if either {@code point1} or {@code point2} is {@code null} <p>
+     * 
+     * @author jinseisieko
+     */
+    static public double distanceBetween(Point point1, Point point2) {
+        if (point1 == null || point2 == null) {
+            throw new IllegalArgumentException("points cannot be null");
+        }
+        double dx = norm(point2.x - point1.x);
+        double dy = norm(point2.y - point1.y);
+        dx = Math.min(dx, 1.0 - dx);
+        dy = Math.min(dy, 1.0 - dy);
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    /**
      * Normalizes a coordinate to the [0, 1) interval, accounting for toroidal periodicity.
+     * <p>
      * Examples: norm(1.3) = 0.3, norm(-0.2) = 0.8.
      * 
-     * @param coordinate any real number
-     * @return the equivalent value in [0, 1)
+     * @param coordinate any real number <p>
+     * @return the equivalent value in [0, 1) <p>
      *  
      * @author jinseisieko
      */
