@@ -34,11 +34,11 @@ public final class DrawStyle {
     /**
      * Private constructor to enforce immutability and use of factory methods.
      *
-     * @param fillColor   paint used for filling shapes (may be Color, GradientPaint, etc.)
-     * @param strokeColor paint used for stroking outlines
-     * @param strokeWidth width of stroke in pixels
-     * @param opacity     alpha value from 0.0 (transparent) to 1.0 (opaque)
-     * @param stroke      stroke definition (BasicStroke, etc.)
+     * @param fillColor   paint used for filling shapes (may be Color, GradientPaint, etc.) <p>
+     * @param strokeColor paint used for stroking outlines <p>
+     * @param strokeWidth width of stroke in pixels <p>
+     * @param opacity     alpha value from 0.0 (transparent) to 1.0 (opaque) <p>
+     * @param stroke      stroke definition (BasicStroke, etc.) <p>
      *
      * @author jinseisieko
      */
@@ -69,7 +69,7 @@ public final class DrawStyle {
     /**
      * Returns the paint used for stroking outlines.
      *
-     * @return the stroke paint; never null
+     * @return the stroke paint; never null <p>
      *
      * @author jinseisieko
      */
@@ -80,7 +80,7 @@ public final class DrawStyle {
     /**
      * Returns the width of the stroke in pixels.
      *
-     * @return stroke width, always ≥ 0.1
+     * @return stroke width, always ≥ 0.1 <p>
      *
      * @author jinseisieko
      */
@@ -91,7 +91,7 @@ public final class DrawStyle {
     /**
      * Returns the opacity level (alpha) of the style.
      *
-     * @return opacity between 0.0 (fully transparent) and 1.0 (fully opaque)
+     * @return opacity between 0.0 (fully transparent) and 1.0 (fully opaque) <p>
      *
      * @author jinseisieko
      */
@@ -107,7 +107,7 @@ public final class DrawStyle {
      * If anti-aliasing or affine transforms are needed, configure them
      * separately on the Graphics2D instance before or after applying the style.
      *
-     * @param g2d the Graphics2D context to configure
+     * @param g2d the Graphics2D context to configure <p>
      *
      * @author jinseisieko
      */
@@ -122,8 +122,8 @@ public final class DrawStyle {
      * <p>
      * Equivalent to using the same color for both fill and outline.
      *
-     * @param color the color to use for both fill and stroke
-     * @return a new DrawStyle instance
+     * @param color the color to use for both fill and stroke <p>
+     * @return a new DrawStyle instance <p>
      *
      * @author jinseisieko
      */
@@ -137,8 +137,8 @@ public final class DrawStyle {
     /**
      * Creates a new DrawStyle with only fill color set; stroke defaults to black.
      *
-     * @param color the fill color
-     * @return a new DrawStyle instance
+     * @param color the fill color <p>
+     * @return a new DrawStyle instance <p>
      *
      * @author jinseisieko
      */
@@ -151,9 +151,9 @@ public final class DrawStyle {
     /**
      * Creates a new DrawStyle with only stroke color and width set; fill defaults to black.
      *
-     * @param color the stroke color
-     * @param width the stroke width (pixels)
-     * @return a new DrawStyle instance
+     * @param color the stroke color <p>
+     * @param width the stroke width (pixels) <p>
+     * @return a new DrawStyle instance <p>
      *
      * @author jinseisieko
      */
@@ -169,13 +169,13 @@ public final class DrawStyle {
      * <p>
      * Gradient runs from point (x1,y1) to (x2,y2) with specified start and end colors.
      *
-     * @param x1 start X coordinate
-     * @param y1 start Y coordinate
-     * @param x2 end X coordinate
-     * @param y2 end Y coordinate
-     * @param c1 start color
-     * @param c2 end color
-     * @return a new DrawStyle instance
+     * @param x1 start X coordinate <p>
+     * @param y1 start Y coordinate <p>
+     * @param x2 end X coordinate <p>
+     * @param y2 end Y coordinate <p>
+     * @param c1 start color <p>
+     * @param c2 end color <p>
+     * @return a new DrawStyle instance <p>
      *
      * @author jinseisieko
      */
@@ -190,8 +190,8 @@ public final class DrawStyle {
      * <p>
      * Uses the provided image as a repeating pattern for filling shapes.
      *
-     * @param image the image to use as texture
-     * @return a new DrawStyle instance
+     * @param image the image to use as texture <p>
+     * @return a new DrawStyle instance <p>
      *
      * @author jinseisieko
      */
@@ -206,7 +206,7 @@ public final class DrawStyle {
     /**
      * Returns a new builder for constructing complex DrawStyle instances.
      *
-     * @return a new Builder instance
+     * @return a new Builder instance <p>
      *
      * @author jinseisieko
      */
@@ -231,8 +231,8 @@ public final class DrawStyle {
         /**
          * Sets the fill paint (color, gradient, texture).
          *
-         * @param paint the paint to use for filling
-         * @return this builder for method chaining
+         * @param paint the paint to use for filling <p>
+         * @return this builder for method chaining <p>
          *
          * @author jinseisieko
          */
@@ -244,8 +244,8 @@ public final class DrawStyle {
         /**
          * Sets the stroke paint (color, gradient, texture).
          *
-         * @param paint the paint to use for stroking
-         * @return this builder for method chaining
+         * @param paint the paint to use for stroking <p>
+         * @return this builder for method chaining <p>
          *
          * @author jinseisieko
          */
@@ -257,8 +257,8 @@ public final class DrawStyle {
         /**
          * Sets the stroke width in pixels.
          *
-         * @param width stroke width, must be > 0
-         * @return this builder for method chaining
+         * @param width stroke width, must be > 0 <p>
+         * @return this builder for method chaining <p>
          *
          * @author jinseisieko
          */
@@ -270,8 +270,8 @@ public final class DrawStyle {
         /**
          * Sets the opacity (alpha) level.
          *
-         * @param opacity value from 0.0 (transparent) to 1.0 (opaque); NaN is treated as 0.0
-         * @return this builder for method chaining
+         * @param opacity value from 0.0 (transparent) to 1.0 (opaque); NaN is treated as 0.0 <p>
+         * @return this builder for method chaining <p>
          *
          * @author jinseisieko
          */
@@ -289,8 +289,8 @@ public final class DrawStyle {
         /**
          * Sets a custom stroke (e.g., dashed line).
          *
-         * @param stroke the stroke definition
-         * @return this builder for method chaining
+         * @param stroke the stroke definition <p>
+         * @return this builder for method chaining <p>
          *
          * @author jinseisieko
          */
@@ -302,7 +302,7 @@ public final class DrawStyle {
         /**
          * Builds and returns a new immutable DrawStyle instance.
          *
-         * @return the constructed DrawStyle
+         * @return the constructed DrawStyle <p>
          *
          * @author jinseisieko
          */

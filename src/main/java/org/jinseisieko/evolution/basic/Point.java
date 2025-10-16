@@ -16,23 +16,72 @@ public class Point {
     private double x;
     private double y;
 
-    public Point(double x,double y) {
+    /**
+     * Constructs a point with the specified coordinates in toroidal space.
+     * <p>
+     * Both input coordinates are immediately normalized to the range [0, 1)
+     * using modular arithmetic to respect the periodic boundary conditions.
+     *
+     * @param x the initial X coordinate (any real number) <p>
+     * @param y the initial Y coordinate (any real number) <p>
+     *
+     * @author jinseisieko
+     */
+    public Point(double x, double y) {
         this.x = norm(x);
         this.y = norm(y);
     }
 
+    /**
+     * Returns the normalized X coordinate of this point.
+     * <p>
+     * The value is guaranteed to be in the interval [0, 1).
+     *
+     * @return the X coordinate in [0, 1) <p>
+     *
+     * @author jinseisieko
+     */
     public double getX() {
         return x;
     }
 
+    /**
+     * Sets the X coordinate of this point to the specified value.
+     * <p>
+     * The input is automatically normalized to the range [0, 1) to maintain
+     * consistency with the toroidal space model.
+     *
+     * @param x the new X coordinate (any real number) <p>
+     *
+     * @author jinseisieko
+     */
     public void setX(double x) {
         this.x = norm(x);
     }
 
+    /**
+     * Returns the normalized Y coordinate of this point.
+     * <p>
+     * The value is guaranteed to be in the interval [0, 1).
+     *
+     * @return the Y coordinate in [0, 1) <p>
+     *
+     * @author jinseisieko
+     */
     public double getY() {
         return y;
     }
 
+    /**
+     * Sets the Y coordinate of this point to the specified value.
+     * <p>
+     * The input is automatically normalized to the range [0, 1) to maintain
+     * consistency with the toroidal space model.
+     *
+     * @param y the new Y coordinate (any real number) <p>
+     *
+     * @author jinseisieko
+     */
     public void setY(double y) {
         this.y = norm(y);
     }
@@ -44,8 +93,8 @@ public class Point {
      * the periodic boundary conditions of the torus. This operation modifies
      * the current point.
      *
-     * @param other the point to add
-     * @return this point, after the addition (for method chaining)
+     * @param other the point to add <p>
+     * @return this point, after the addition (for method chaining) <p>
      * 
      * @author jinseisieko
      */
@@ -67,7 +116,7 @@ public class Point {
      * in the periodic space of the torus.
      *
      * @return a new {@code Point} representing the inverse of this point;
-     *         the original point is unchanged.
+     *         the original point is unchanged. <p>
      * 
      * @author jinseisieko
      */
@@ -81,10 +130,11 @@ public class Point {
 
     /**
      * Normalizes a coordinate to the [0, 1) interval, accounting for toroidal periodicity.
+     * <p>
      * Examples: norm(1.3) = 0.3, norm(-0.2) = 0.8.
      * 
-     * @param coordinate any real number
-     * @return the equivalent value in [0, 1)
+     * @param coordinate any real number <p>
+     * @return the equivalent value in [0, 1) <p>
      *  
      * @author jinseisieko
      */

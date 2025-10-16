@@ -19,8 +19,8 @@ public class MovingObject {
     /**
      * Constructs a new {@code MovingObject} with the specified initial position.
      *
-     * @param point the initial position; must not be {@code null}
-     * @throws IllegalArgumentException if {@code point} is {@code null}
+     * @param point the initial position; must not be {@code null} <p>
+     * @throws IllegalArgumentException if {@code point} is {@code null} <p>
      * 
      * @author jinseisieko
      */
@@ -34,8 +34,8 @@ public class MovingObject {
     /**
      * Constructs a new {@code MovingObject} with the specified initial coordinates.
      *
-     * @param x the initial x-coordinate
-     * @param y the initial y-coordinate
+     * @param x the initial x-coordinate <p>
+     * @param y the initial y-coordinate <p>
      * 
      * @author jinseisieko
      */
@@ -46,8 +46,8 @@ public class MovingObject {
     /**
      * Moves this object to the specified position.
      *
-     * @param position the new position; must not be {@code null}
-     * @throws IllegalArgumentException if {@code position} is {@code null}
+     * @param position the new position; must not be {@code null} <p>
+     * @throws IllegalArgumentException if {@code position} is {@code null} <p>
      * 
      * @author jinseisieko
      */
@@ -62,8 +62,8 @@ public class MovingObject {
     /**
      * Moves this object to the specified coordinates.
      *
-     * @param x the new x-coordinate
-     * @param y the new y-coordinate
+     * @param x the new x-coordinate <p>
+     * @param y the new y-coordinate <p>
      * 
      * @author jinseisieko
      */
@@ -74,8 +74,8 @@ public class MovingObject {
     /**
      * Shifts this object's position by the given displacement vector.
      *
-     * @param offset the displacement vector; must not be {@code null}
-     * @throws IllegalArgumentException if {@code offset} is {@code null}
+     * @param offset the displacement vector; must not be {@code null} <p>
+     * @throws IllegalArgumentException if {@code offset} is {@code null} <p>
      * 
      * @author jinseisieko
      */
@@ -89,8 +89,8 @@ public class MovingObject {
     /**
      * Shifts this object's position by the given offsets.
      *
-     * @param dx the offset along the x-axis
-     * @param dy the offset along the y-axis
+     * @param dx the offset along the x-axis <p>
+     * @param dy the offset along the y-axis <p>
      * 
      * @author jinseisieko
      */
@@ -103,7 +103,7 @@ public class MovingObject {
      * The returned {@code Point} is a defensive copy to prevent external modification
      * of the internal state.
      *
-     * @return a new {@code Point} representing the current position
+     * @return a new {@code Point} representing the current position <p>
      * 
      * @author jinseisieko
      */
@@ -114,7 +114,7 @@ public class MovingObject {
     /**
      * Returns the current x-coordinate of this object.
      *
-     * @return the x-coordinate of the current position
+     * @return the x-coordinate of the current position <p>
      * 
      * @author jinseisieko
      */
@@ -125,7 +125,7 @@ public class MovingObject {
     /**
      * Returns the current y-coordinate of this object.
      *
-     * @return the y-coordinate of the current position
+     * @return the y-coordinate of the current position <p>
      * 
      * @author jinseisieko
      */
