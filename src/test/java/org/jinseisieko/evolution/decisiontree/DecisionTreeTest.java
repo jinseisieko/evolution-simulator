@@ -17,6 +17,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author jinseisieko
  */
 public class DecisionTreeTest {
+    @Test
+    void constructurWithZeroDepth_shouldThrowExceptionWithMessage() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+            DecisionTree decisionTree = new DecisionTree(0);
+            decisionTree.getRoot();
+        });
+        assertNotNull(ex.getMessage());
+        assertFalse(ex.getMessage().isBlank());
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20})
     void constructur_shouldCreateRightDepth(int depth) {

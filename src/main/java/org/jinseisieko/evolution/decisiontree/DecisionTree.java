@@ -18,6 +18,9 @@ public class DecisionTree {
     private List<OutcomeNode> leafs = new ArrayList<>();
 
     public DecisionTree(int depth) {
+        if (depth <= 0) {
+            throw new IllegalArgumentException("Depth cannot be less than or equal zero");
+        }
         this.root = generate(depth);
         
     }
