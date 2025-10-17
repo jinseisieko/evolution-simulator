@@ -1,9 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-package org.decisiontree;
+// src/main/java/org/decisiontree/Node.java
+package org.jinseisieko.evolution.decisiontree;
 
 /**
  *
@@ -48,10 +44,9 @@ public class Node {
     public Node traverse(boolean left)
     {
         if (left) {
-            return leftSon;
+            return getLeftSon();
         } else {
-            return rightSon;
+            return getRightSon();
         }
     }
-
 }
