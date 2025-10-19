@@ -37,7 +37,7 @@ class CircleTest {
 
     /**
      * Confirms that the coordinate-based constructor correctly normalizes inputs
-     * and initializes both center and radius.
+     * and initializes center.
      */
     @Test
     void constructorWithCoordinates_shouldNormalizeAndSetCenterAndRadius() {
