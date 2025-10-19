@@ -76,6 +76,7 @@ class DecisionTreeTest {
         assertEquals(depth, dl);
         assertEquals(depth, dr);
         assertEquals(depth, dRandom);
+        assertEquals(depth, tree.getDepth());
     }
 
     /**
@@ -114,32 +115,6 @@ class DecisionTreeTest {
         assertNotNull(rightQN.getRightSon()); // RR
         assertTrue(rightQN.getLeftSon() instanceof OutcomeNode);
         assertTrue(rightQN.getRightSon() instanceof OutcomeNode);
-    }
-
-    /**
-     * Verifies that the constructor using a pre-built root node correctly assigns it.
-     */
-    @Test
-    void constructorWithRootNode_shouldAssignRootAndMarkInvalid() {
-        RootQuestionNode rootNode = new RootQuestionNode(new EnergyQuestion(0.3), new OutcomeNode(new MockStatus("A")), new OutcomeNode(new MockStatus("B")));
-        DecisionTree tree = new DecisionTree(rootNode);
-
-        assertEquals(rootNode, tree.getRoot(), "Constructor should assign the provided root node.");
-        assertFalse(tree.isIndexValid(), "Index should be marked invalid after construction with a root node.");
-    }
-
-    /**
-     * Ensures that constructing a {@code DecisionTree} with a {@code null} root node throws an exception.
-     */
-    @Test
-    void constructorWithNullRootNode_shouldThrowNPE() {
-        NullPointerException ex = assertThrows(NullPointerException.class, () -> {
-            DecisionTree tree = new DecisionTree((RootQuestionNode) null);
-            tree.getRoot();
-        });
-        assertNotNull(ex.getMessage());
-        // The message comes from Objects.requireNonNull, which might be generic or include "Root node cannot be null"
-        // assertFalse(ex.getMessage().isBlank()); // This is often true for NPEs from requireNonNull
     }
 
     // === Test node indexing ===

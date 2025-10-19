@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Objects;
 
 /**
  * Represents a binary decision tree structure.
@@ -32,6 +31,7 @@ public class DecisionTree {
     private final RootQuestionNode root;
     private Node[] indexedNodes; // Array for fast node lookup, indexed by node number (1-based)
     private boolean indexValid; // Flag to indicate if the indexedNodes array is up-to-date
+    private int depth;
 
     /**
      * Constructs a decision tree with a specified depth.
@@ -57,25 +57,7 @@ public class DecisionTree {
         }
         this.root = generateFullBinaryTree(depth);
         this.indexValid = false; // Index needs to be built after construction
-    }
-
-    /**
-     * Constructs a decision tree with a pre-defined root node.
-     * <p>
-     * This constructor allows for creating a tree from an already built structure.
-     * It does not perform any validation on the structure of the provided root node
-     * or its children. The caller is responsible for ensuring the tree rooted at
-     * {@code root} is valid and initialized according to the rules of the node classes.
-     * The index is marked as invalid and must be rebuilt using {@link #rebuildIndex()}.
-     *
-     * @param root The root node of the tree. Must not be {@code null}. <p>
-     * @throws NullPointerException if {@code root} is {@code null}. <p>
-     *
-     * @author jinseisieko
-     */
-    public DecisionTree(RootQuestionNode root) {
-        this.root = Objects.requireNonNull(root, "Root node cannot be null");
-        this.indexValid = false; // Index needs to be built after construction
+        this.depth = depth;
     }
 
     /**
@@ -298,32 +280,14 @@ public class DecisionTree {
         }
     }
 
-    // --- Potential Optimizations / Future Considerations ---
-
-    // 1.  **Caching / Memoization:** If the tree is executed frequently with similar `Answerer` states,
-    //     and the `Answerer`'s answers are deterministic based on a snapshot of the entity's state,
-    //     one could potentially cache the result of `apply` for a given state. However, this requires
-    //     the `Answerer` to provide a stable, comparable state representation, which is often complex
-    //     and entity-specific.
-
-    // 2.  **Node Pooling:** For scenarios with frequent tree creation/destruction (e.g., high mutation rates
-    //     in evolutionary algorithms), object pooling for `Node` objects could reduce garbage collection pressure.
-    //     This adds complexity and is usually considered only after profiling identifies it as a bottleneck.
-
-    // 3.  **Flat Array Representation (Alternative):** The current approach keeps the tree structure
-    //     and adds an *index* array. A more radical change would be to represent the *entire* tree
-    //     as a flat array using the 1-based index formula (parent i, children 2i, 2i+1). This maximizes
-    //     traversal speed but makes structural modifications (like crossover/mutation in evolution)
-    //     significantly more complex, as you'd need to manage the array structure directly.
-
-    // 4.  **Validation Method:** A public method to validate the entire tree structure (e.g., check for cycles,
-    //     ensure all paths lead to OutcomeNodes, verify `isInitialized` for all nodes) could be useful for
-    //     debugging during development or after complex mutation operations.
-    //     Example signature: public boolean validateStructure()
-
-    // 5.  **Index Management:** The current system requires the user to manually call `rebuildIndex`
-    //     after modifications. For more automation, you could add a `notifyStructureChanged()` method
-    //     that sets `indexValid = false`. Then, `getNodeByIndex` could automatically rebuild the index
-    //     if it's invalid, although this might hide performance costs. The manual rebuild approach
-    //     gives more explicit control, suitable for batch operations like after mutation.
+    /**
+     * Depth of this decision tree. The depth is how many transitions from the root to the leaf need to be made.
+     * 
+     * @return Depth <p>
+     *
+     * @author jinseisieko
+     */
+    public int getDepth() {
+        return depth;
+    }
 }
