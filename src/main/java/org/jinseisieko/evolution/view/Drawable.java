@@ -3,6 +3,8 @@ package org.jinseisieko.evolution.view;
 
 import java.awt.Shape;
 
+import org.jinseisieko.evolution.basic.ShapeType;
+
 /**
  * Represents an object that can be rendered by a {@link Viewport}.
  * <p>
@@ -12,6 +14,13 @@ import java.awt.Shape;
  * @author jinseisieko
  */
 public interface Drawable extends Shape {
+
+     /**
+     * Returns the shape type of the object,
+     *
+     * @return One of the enum elements of ShapeType
+     */
+    ShapeType getShapeType();
     
     /**
      * Returns the X coordinate of the object in logical (simulation) space,
