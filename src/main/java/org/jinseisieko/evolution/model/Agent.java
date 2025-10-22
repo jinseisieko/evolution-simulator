@@ -16,7 +16,7 @@ import org.jinseisieko.evolution.decisiontree.Status;
  */
 public class Agent extends Entity implements Answerer {
 
-    private Brain brain;
+    private final Brain brain;
     private Status localStatus;
     private double brainUpdateTime;
     private double brainTimer = 0.0;
