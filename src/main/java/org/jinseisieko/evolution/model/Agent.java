@@ -146,8 +146,8 @@ public abstract class Agent extends Entity implements Answerer {
             this.brainTimer = 0;
         }
         this.statusActivity();
-        this.energy -= SPEED_ENERGY_COST * this.getSpeed();
-        this.energy -= ANGULAR_SPEED_ENERGY_COST * this.getAngularSpeed();
+        this.energy -= SPEED_ENERGY_COST * this.getSpeed() * dt;
+        this.energy -= ANGULAR_SPEED_ENERGY_COST * this.getAngularSpeed() * dt;
         super.updateEntity(dt);
 
     }
