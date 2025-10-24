@@ -1,6 +1,8 @@
 package org.jinseisieko.evolution.model;
 
 import org.jinseisieko.evolution.basic.Point;
+import org.jinseisieko.evolution.model.stubs.AdaptiveBrain;
+import org.jinseisieko.evolution.model.stubs.EnergyAwareAgent;
 import org.jinseisieko.evolution.model.stubs.FirstStatus;
 import org.jinseisieko.evolution.model.stubs.SecondStatus;
 import org.jinseisieko.evolution.model.stubs.SimpleBrain;
@@ -86,5 +88,58 @@ class AgentTest {
         assertEquals(0.96, ta.getEnergy(), 1e-12);
         assertTrue(ta.getLocalStatus() instanceof SecondStatus);
         assertEquals(-10.0, ta.getSpeed(), 1e-12); // from SecondStatus
+
+        for (int i = 0; i < 10000; i++) {
+            ta.updateEntity(0.04);
+        }
+
+        assertFalse(ta.getEnergy() > 0);
+    }
+
+    /**
+     * Verifies the behavior of an {@code EnergyAwareAgent}
+     * to make decisions while continuously consuming energy over time.
+     * <p>
+     * This test ensures that:
+     * <ol>
+     *   <li>The agent is correctly initialized with zero physical state and full energy (1.0)</li>
+     *   <li>Calling {@code statusActivity()} before any brain activation has no effect on physical properties</li>
+     *   <li>Repeated calls to {@code updateEntity(dt)} gradually consume energy according to the internal logic</li>
+     *   <li>The agent remains alive (energy > 0) during a short simulation (30 steps of 0.1 time units)</li>
+     *   <li>After a sufficiently long simulation (3000 additional steps), the agent's energy drops to zero or below</li>
+     * </ol>
+     */
+    @Test
+    void energyAwareAgent_worksExactly() {
+        Point point = new Point(0.0, 0.0);
+        EnergyAwareAgent eaa = new EnergyAwareAgent(point, 0.01);
+        assertTrue(eaa.getBrain() instanceof AdaptiveBrain);
+        assertEquals(0.0, eaa.getX(), 1e-12);
+        assertEquals(0.0, eaa.getY(), 1e-12);
+        assertEquals(0.0, eaa.getSpeed(), 1e-12);
+        assertEquals(0.0, eaa.getAcceleration(), 1e-12);
+        assertEquals(0.0, eaa.getAngle(), 1e-12);
+        assertEquals(0.0, eaa.getAngularSpeed(), 1e-12);
+
+        eaa.statusActivity();
+        assertTrue(eaa.getBrain() instanceof AdaptiveBrain);
+        assertEquals(0.0, eaa.getX(), 1e-12);
+        assertEquals(0.0, eaa.getY(), 1e-12);
+        assertEquals(0.0, eaa.getSpeed(), 1e-12);
+        assertEquals(0.0, eaa.getAcceleration(), 1e-12);
+        assertEquals(0.0, eaa.getAngle(), 1e-12);
+        assertEquals(0.0, eaa.getAngularSpeed(), 1e-12);
+
+        for (int i = 0; i < 30; i++) {
+            eaa.updateEntity(0.1);
+        }
+        
+        assertTrue(eaa.getEnergy() > 0);
+
+        for (int i = 0; i < 3000; i++) {
+            eaa.updateEntity(0.1);
+        }
+
+        assertFalse(eaa.getEnergy() > 0);
     }
 }
