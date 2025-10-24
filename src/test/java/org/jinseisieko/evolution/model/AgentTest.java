@@ -53,7 +53,7 @@ class AgentTest {
         assertEquals(0.0, ta.getSpeed(), 1e-12);
         assertEquals(0.0, ta.getAcceleration(), 1e-12);
         assertEquals(0.0, ta.getAngle(), 1e-12);
-        assertEquals(0.0, ta.getAngularAcceleration(), 1e-12);
+        assertEquals(0.0, ta.getAngularSpeed(), 1e-12);
 
         // statusActivity should not change physical state before brain is used
         ta.statusActivity();
