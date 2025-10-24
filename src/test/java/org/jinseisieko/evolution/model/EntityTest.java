@@ -46,7 +46,7 @@ class EntityTest {
         assertEquals(coordinates.getY(), entity.getY(), 1e-12);
         assertEquals(0, entity.getSpeed(), 1e-12);
         assertEquals(0, entity.getAcceleration(), 1e-12);
-        assertEquals(0, entity.getAngularAcceleration(), 1e-12);
+        assertEquals(0, entity.getAngularSpeed(), 1e-12);
         // Defensive copy: center must not be the same reference
         assertNotEquals(entity.getCenter(), coordinates);
         assertEquals(coordinates.getX(), entity.getCenter().getX(), 1e-12);
@@ -66,7 +66,7 @@ class EntityTest {
         assertEquals(0.5, entity.getY(), 1e-12);
         assertEquals(0, entity.getSpeed(), 1e-12);
         assertEquals(0, entity.getAcceleration(), 1e-12);
-        assertEquals(0, entity.getAngularAcceleration(), 1e-12);
+        assertEquals(0, entity.getAngularSpeed(), 1e-12);
         assertEquals(0.5, entity.getCenter().getX(), 1e-12);
         assertEquals(0.5, entity.getCenter().getY(), 1e-12);
         assertEquals(0.01, entity.getRadius(), 1e-12);
@@ -187,7 +187,7 @@ class EntityTest {
     // === Angular acceleration ===
 
     /**
-     * Validates that {@code setAngularAccelerationRad()} stores the provided value exactly,
+     * Validates that {@code setAngularSpeedRad()} stores the provided value exactly,
      * without normalization (angular acceleration is not an angle, so no wrapping).
      */
     @ParameterizedTest
@@ -199,10 +199,10 @@ class EntityTest {
         "-1.5707963267948966, -1.5707963267948966",
         "-12.566370614359172, -12.566370614359172"
     })
-    void setAngularAccelerationRad_storesValueExactly(double input, double expected) {
+    void setAngularSpeedRad_storesValueExactly(double input, double expected) {
         Entity entity = new Entity(0.1, 0.1, 0.01);
-        entity.setAngularAccelerationRad(input);
-        assertEquals(expected, entity.getAngularAcceleration(), 1e-12);
+        entity.setAngularSpeedRad(input);
+        assertEquals(expected, entity.getAngularSpeed(), 1e-12);
     }
 
     /**
@@ -223,8 +223,8 @@ class EntityTest {
     })
     void setAngularAccelerationDeg_convertsCorrectly(double degrees, double expectedRad) {
         Entity entity = new Entity(0.1, 0.1, 0.01);
-        entity.setAngularAccelerationDeg(degrees);
-        assertEquals(Math.toRadians(degrees), entity.getAngularAcceleration(), 1e-12);
+        entity.setAngularSpeedDeg(degrees);
+        assertEquals(Math.toRadians(degrees), entity.getAngularSpeed(), 1e-12);
     }
 
     // === Motion integration ===
@@ -256,7 +256,7 @@ class EntityTest {
         double expectedAngle) {
         Entity entity = new Entity(x, y, 0.01);
         entity.setAngleRad(angle);
-        entity.setAngularAccelerationRad(angularAcceleration);
+        entity.setAngularSpeedRad(angularAcceleration);
         entity.setAcceleration(acceleration);
         entity.updateEntity(0.01);
         entity.updateEntity(0.01);
@@ -296,7 +296,7 @@ class EntityTest {
         entity.setSpeed(5);
         entity.setAcceleration(10);
         entity.setAngleRad(Math.PI / 4);
-        entity.setAngularAccelerationRad(1);
+        entity.setAngularSpeedRad(1);
 
         double initialX = entity.getX();
         double initialY = entity.getY();
@@ -320,7 +320,7 @@ class EntityTest {
     void updateEntity_accumulatesAngleWithAngularAcceleration() {
         Entity entity = new Entity(0, 0, 0.01);
         entity.setAngleRad(0);
-        entity.setAngularAccelerationRad(2.0); // rad/s²
+        entity.setAngularSpeedRad(2.0); // rad/s²
         double dt = 0.5;
 
         entity.updateEntity(dt); // angle = 0 + 2*0.5 = 1.0
