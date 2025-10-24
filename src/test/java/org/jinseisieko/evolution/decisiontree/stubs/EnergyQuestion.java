@@ -1,7 +1,7 @@
 // src/test/java/org/jinseisieko/evolution/decisiontree/stubs/EnergyQuestion.java
 package org.jinseisieko.evolution.decisiontree.stubs;
 
-import org.jinseisieko.evolution.decisiontree.Question;
+import org.jinseisieko.evolution.bindingcomponents.Question;
 
 public final class EnergyQuestion implements Question {
     private final double threshold;

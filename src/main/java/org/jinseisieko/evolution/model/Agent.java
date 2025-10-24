@@ -6,9 +6,9 @@
 package org.jinseisieko.evolution.model;
 
 import org.jinseisieko.evolution.basic.Point;
-import org.jinseisieko.evolution.decisiontree.Answerer;
-import org.jinseisieko.evolution.decisiontree.Question;
-import org.jinseisieko.evolution.decisiontree.Status;
+import org.jinseisieko.evolution.bindingcomponents.Answerer;
+import org.jinseisieko.evolution.bindingcomponents.Question;
+import org.jinseisieko.evolution.bindingcomponents.Status;
 
 /**
  *

@@ -3,15 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package org.jinseisieko.evolution.model;
+package org.jinseisieko.evolution.model.stubs;
 
-import org.jinseisieko.evolution.bindingcomponents.Answerer;
 import org.jinseisieko.evolution.bindingcomponents.Status;
 
 /**
  *
  * @author jinseisieko
  */
-public interface Brain {
-    Status decide(Answerer context);
+public class FirstStatus implements Status{
+
 }

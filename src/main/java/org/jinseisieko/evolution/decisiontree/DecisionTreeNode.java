@@ -1,6 +1,8 @@
 // src/main/java/org/decisiontree/DecisionTreeNode.java
 package org.jinseisieko.evolution.decisiontree;
 
+import org.jinseisieko.evolution.bindingcomponents.Answerer;
+
 /**
  * Interface defining the core logic for traversing a decision tree node.
  * <p>

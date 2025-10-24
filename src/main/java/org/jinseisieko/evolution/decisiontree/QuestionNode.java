@@ -1,6 +1,9 @@
 // src/main/java/org/jinseisieko/evolution/decisiontree/QuestionNode.java
 package org.jinseisieko.evolution.decisiontree;
 
+import org.jinseisieko.evolution.bindingcomponents.Answerer;
+import org.jinseisieko.evolution.bindingcomponents.Question;
+
 /**
  * Represents an internal (non-leaf) node in a binary decision tree that poses a yes/no question.
  * <p>
