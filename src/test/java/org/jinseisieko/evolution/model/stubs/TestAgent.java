@@ -18,7 +18,7 @@ public class TestAgent extends Agent {
     private int number;
 
     public TestAgent(Point initialCoordinates, double size, int number, double brainUpdateTime, double BRAIN_ENERGY_COST) {
-        super(initialCoordinates, size, brainUpdateTime, new SimpleBrain(), BRAIN_ENERGY_COST);
+        super(initialCoordinates, size, brainUpdateTime, new SimpleBrain(), BRAIN_ENERGY_COST, 0.0, 0.0);
         this.number = number;
     }
 
