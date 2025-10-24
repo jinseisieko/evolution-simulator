@@ -1,12 +1,12 @@
-// src/test/java/org/jinseisieko/evolution/decisiontree/stubs/EnergyQuestion.java
-package org.jinseisieko.evolution.decisiontree.stubs;
+// src/test/java/org/jinseisieko/evolution/model/stubs/SpeedQuestion.java
+package org.jinseisieko.evolution.model.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Question;
 
-public final class EnergyQuestion implements Question {
+public final class SpeedQuestion implements Question {
     private final double threshold;
 
-    public EnergyQuestion(double threshold) {
+    public SpeedQuestion(double threshold) {
         this.threshold = threshold;
     }
 
@@ -17,8 +17,8 @@ public final class EnergyQuestion implements Question {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EnergyQuestion q)) return false;
-        return Double.compare(q.threshold, threshold) == 0;
+        if (!(o instanceof SpeedQuestion that)) return false;
+        return Double.compare(that.threshold, threshold) == 0;
     }
 
     @Override

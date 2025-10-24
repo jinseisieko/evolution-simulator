@@ -1,6 +1,9 @@
 // src/test/java/org/jinseisieko/evolution/decisiontree/DecisionTreeTest.java
 package org.jinseisieko.evolution.decisiontree;
 
+import org.jinseisieko.evolution.bindingcomponents.Answerer;
+import org.jinseisieko.evolution.bindingcomponents.Question;
+import org.jinseisieko.evolution.bindingcomponents.Status;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

@@ -1,5 +1,7 @@
 package org.jinseisieko.evolution.decisiontree;
 
+import org.jinseisieko.evolution.bindingcomponents.Question;
+
 /**
  * Represents the root node of a binary decision tree.
  * <p>

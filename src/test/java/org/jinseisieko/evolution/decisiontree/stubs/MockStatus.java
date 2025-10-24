@@ -1,7 +1,7 @@
 // src/test/java/org/jinseisieko/evolution/decisiontree/stubs/MockStatus.java
 package org.jinseisieko.evolution.decisiontree.stubs;
 
-import org.jinseisieko.evolution.decisiontree.Status;
+import org.jinseisieko.evolution.bindingcomponents.Status;
 
 /**
  * A simple mock implementation of the {@link Status} interface for testing purposes.
