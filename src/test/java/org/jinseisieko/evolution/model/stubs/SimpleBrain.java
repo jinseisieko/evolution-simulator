@@ -7,7 +7,12 @@ import org.jinseisieko.evolution.bindingcomponents.Status;
 import org.jinseisieko.evolution.model.Brain;
 
 public final class SimpleBrain implements Brain {
-    private final Question q = new LessThanQuestion(10);
+    private final Question q;
+
+    public SimpleBrain()
+    {
+        this.q = new LessThanQuestion(10);
+    }
 
     @Override
     public Status decide(Answerer context) {
