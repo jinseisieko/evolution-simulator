@@ -40,7 +40,15 @@ public abstract class Agent extends Entity implements Answerer {
      *
      * @author jinseisieko
      */
-    public Agent(Point initialCoordinates, double size, double brainUpdateTime, Brain brain, double BRAIN_ENERGY_COST, double SPEED_ENERGY_COST, double ANGULAR_SPEED_ENERGY_COST) {
+    public Agent(
+            Point initialCoordinates,
+            double size,
+            double brainUpdateTime,
+            Brain brain,
+            double BRAIN_ENERGY_COST,
+            double SPEED_ENERGY_COST, 
+            double ANGULAR_SPEED_ENERGY_COST
+        ) {
         super(initialCoordinates, size);
         if (brainUpdateTime <= 0) {
             throw new IllegalArgumentException("Brain update time should be more than zero");
