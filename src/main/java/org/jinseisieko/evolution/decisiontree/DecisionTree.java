@@ -294,14 +294,37 @@ public class DecisionTree {
         return depth;
     }
 
+    /**
+     * Node number of this decision tree. The node number is the number of all verticles in this tree
+     * 
+     * @return Node number <p>
+     * 
+     * @author jinseisieko 
+     */
     public int getNodeNumber() {
         return ((int) Math.pow(2, this.depth+1)) - 1;
     }
     
+    /**
+     * Status number of this decision tree. The status number is the number of all outcomes nodes in this tree
+     * 
+     * @return Status number <p>
+     * 
+     * @author jinseisieko 
+     */
     public int getStatusNumber() {
         return (int) Math.pow(2, this.depth);
     }
 
+    /**
+     * Check is this tree initialized.
+     * Check are all tree nodes initialized.
+     * 
+     * @return true if tree is initialized <p>
+     * @throws IllegalStateException if tree is not indexed ({@link rebuildIndex()} should be called before this method) <p>
+     * 
+     * @author jinseisieko 
+     */
     public boolean isInitialized() {
         boolean answer = true;
         if (!this.indexValid) {
