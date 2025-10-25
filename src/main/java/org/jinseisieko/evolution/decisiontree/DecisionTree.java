@@ -293,4 +293,23 @@ public class DecisionTree {
     public int getDepth() {
         return depth;
     }
+
+    public int getNodeNumber() {
+        return ((int) Math.pow(2, this.depth+1)) - 1;
+    }
+    
+    public int getStatusNumber() {
+        return (int) Math.pow(2, this.depth);
+    }
+
+    public boolean isInitialized() {
+        boolean answer = true;
+        if (!this.indexValid) {
+            throw  new IllegalStateException("To check initialization tree should be indexed");
+        }
+        for (int i = 1; i < this.getNodeNumber() + 1; i++) {
+            answer &= this.getNodeByIndex(i).isInitialized();
+        }
+        return answer;
+    }
 }
