@@ -219,4 +219,61 @@ public class Node {
     private enum ChildRole {
         LEFT, RIGHT, NONE
     }
+
+    /**
+     * Creates a deep copy of this node and its entire subtree.
+     * <p>
+     * The implementation uses pattern matching (available in Java 17+) to delegate
+     * copying logic to concrete subclasses such as {@code OutcomeNode},
+     * {@code QuestionNode}, and {@code RootQuestionNode}. Each subclass is expected
+     * to correctly copy its own state and recursively copy its children.
+     * <p>
+     * 
+     * @return a deep copy of this node and its subtree, or {@code null} if the node type
+     *         is not handled by the copying logic
+     *
+     * @author jinseisieko
+     */
+    public Node copy() {
+        switch (this) {
+            case OutcomeNode oNode -> {
+                OutcomeNode newNode = new OutcomeNode();
+                if (oNode.getStatus() != null) {
+                    newNode.setStatus(oNode.getStatus());
+                }
+                return newNode;
+            }
+            case RootQuestionNode rNode -> {
+                RootQuestionNode newNode = new RootQuestionNode();
+                if (rNode.getLeftSon() != null) {
+                    newNode.setLeftSon(rNode.getLeftSon().copy());
+                }
+                if (rNode.getRightSon() != null) {
+                    newNode.setRightSon(rNode.getRightSon().copy());
+                }
+                if (rNode.getQuestion() != null) {
+                    newNode.setQuestion(rNode.getQuestion());
+                }
+                return newNode;
+            }
+            case QuestionNode qNode -> {
+                QuestionNode newNode = new QuestionNode();
+                if (qNode.getLeftSon() != null) {
+                    newNode.setLeftSon(qNode.getLeftSon().copy());
+                }
+                if (qNode.getRightSon() != null) {
+                    newNode.setRightSon(qNode.getRightSon().copy());
+                }
+                if (qNode.getQuestion() != null) {
+                    newNode.setQuestion(qNode.getQuestion());
+                }
+                return newNode;
+            }
+            default -> {
+                // This should not happen in a well-formed tree.
+                assert false;
+                return null;
+            }
+        }
+    }
 }
