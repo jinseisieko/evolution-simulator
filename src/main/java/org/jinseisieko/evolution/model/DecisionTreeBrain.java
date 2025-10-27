@@ -55,12 +55,12 @@ public class DecisionTreeBrain extends DecisionTree implements Brain {
         return brain;
     }
 
-    public static DecisionTreeBrain cross(DecisionTreeBrain tree1, DecisionTreeBrain tree2) {
-        int depth = tree1.getDepth();
-        DecisionTreeBrain brain = new DecisionTreeBrain(depth);
-        brain.rebuildIndex();
+    // public static DecisionTreeBrain cross(DecisionTreeBrain tree1, DecisionTreeBrain tree2) {
+    //     int depth = tree1.getDepth();
+    //     DecisionTreeBrain brain = new DecisionTreeBrain(tree1.getRoot());
+    //     brain.rebuildIndex();
         
         
-        return brain;
-    }
+    //     return brain;
+    // }
 }

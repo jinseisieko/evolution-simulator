@@ -37,6 +37,28 @@ class DecisionTreeTest {
     }
 
     /**
+     * Verifies that constructing a {@code DecisionTree} with root creates rigth tree.
+     */
+    @Test
+    void constructorWithRoot_shouldCreateNewTreeExactly() {
+        DecisionTree tree = new DecisionTree(1);
+        tree.getRoot().setQuestion(new EnergyQuestion(0.5));
+        Node root = tree.getRoot();
+        OutcomeNode leftOutcome = (OutcomeNode) root.getLeftSon();
+        OutcomeNode rightOutcome = (OutcomeNode) root.getRightSon();
+        leftOutcome.setStatus(new MockStatus("1"));
+        rightOutcome.setStatus(new MockStatus("2"));
+        tree.rebuildIndex();
+
+        OutcomeNode l = (OutcomeNode) tree.getRoot().getLeftSon();
+        DecisionTree newTree = new DecisionTree(1, tree.getRoot());
+        assertNotEquals(newTree.getRoot().getLeftSon(), l);
+        OutcomeNode newL = (OutcomeNode) newTree.getRoot().getLeftSon();
+        assertEquals("MockStatus{1}", newL.getStatus().toString());
+
+    }
+
+    /**
      * Verifies that constructing a {@code DecisionTree} with a negative depth throws an exception.
      */
     @Test
