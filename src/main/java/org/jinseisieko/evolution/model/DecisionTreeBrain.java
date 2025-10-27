@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
+// src/main/java/org/jinseisieko/evolution/model/DecisionTreeBrain.java
 package org.jinseisieko.evolution.model;
 
 import org.jinseisieko.evolution.bindingcomponents.Answerer;
