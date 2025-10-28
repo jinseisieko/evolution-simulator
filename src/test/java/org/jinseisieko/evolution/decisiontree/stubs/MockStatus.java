@@ -1,6 +1,8 @@
 // src/test/java/org/jinseisieko/evolution/decisiontree/stubs/MockStatus.java
 package org.jinseisieko.evolution.decisiontree.stubs;
 
+import java.util.Objects;
+
 import org.jinseisieko.evolution.bindingcomponents.Status;
 
 /**
@@ -29,11 +31,11 @@ public class MockStatus implements Status {
     public String toString() {
         return "MockStatus{" + description + "}";
     }
-
-    // Equals and hashCode might be optionally overridden if needed for specific tests
-    // For basic verification, the default Object implementations might suffice.
-    // Example optional override:
-    /*
+    /**
+    * Equals and hashCode might be optionally overridden if needed for specific tests
+    * For basic verification, the default Object implementations might suffice.
+    * Example optional override:
+    */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,5 +48,4 @@ public class MockStatus implements Status {
     public int hashCode() {
         return Objects.hash(description);
     }
-    */
 }

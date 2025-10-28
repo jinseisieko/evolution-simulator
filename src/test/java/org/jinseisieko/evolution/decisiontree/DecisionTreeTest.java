@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.jinseisieko.evolution.decisiontree.stubs.EnergyQuestion;
 import org.jinseisieko.evolution.decisiontree.stubs.MockStatus;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /**
  * Unit tests for the {@link DecisionTree} class, which represents a binary
@@ -33,6 +34,28 @@ class DecisionTreeTest {
         });
         assertNotNull(ex.getMessage());
         assertFalse(ex.getMessage().isBlank());
+    }
+
+    /**
+     * Verifies that constructing a {@code DecisionTree} with root creates rigth tree.
+     */
+    @Test
+    void constructorWithRoot_shouldCreateNewTreeExactly() {
+        DecisionTree tree = new DecisionTree(1);
+        tree.getRoot().setQuestion(new EnergyQuestion(0.5));
+        Node root = tree.getRoot();
+        OutcomeNode leftOutcome = (OutcomeNode) root.getLeftSon();
+        OutcomeNode rightOutcome = (OutcomeNode) root.getRightSon();
+        leftOutcome.setStatus(new MockStatus("1"));
+        rightOutcome.setStatus(new MockStatus("2"));
+        tree.rebuildIndex();
+
+        OutcomeNode l = (OutcomeNode) tree.getRoot().getLeftSon();
+        DecisionTree newTree = new DecisionTree(1, tree.getRoot());
+        assertNotEquals(newTree.getRoot().getLeftSon(), l);
+        OutcomeNode newL = (OutcomeNode) newTree.getRoot().getLeftSon();
+        assertEquals("MockStatus{1}", newL.getStatus().toString());
+
     }
 
     /**
@@ -286,5 +309,69 @@ class DecisionTreeTest {
 
         assertNotNull(ex.getMessage());
         assertTrue(ex.getMessage().toLowerCase().contains("question"), "Exception message should mention 'question'.");
+    }
+    
+    /**
+     * Verifies that the {@code getNodeNumber} method correctly returns the number of all Nodes
+     */
+    @ParameterizedTest
+    @CsvSource({
+        "1, 3",
+        "2, 7",
+        "3, 15"
+    })
+    void getNodeNumber_shouldReturnCorrectValue(int depth, int expected) {
+        DecisionTree tree = new DecisionTree(depth);
+        assertEquals(expected, tree.getNodeNumber());
+    }
+
+    /**
+     * Verifies that the {@code getStatusNumber} method correctly returns the number of all Status Nodes.
+     * Status nodes are located in the last row of tree (leafs).
+     */
+    @ParameterizedTest
+    @CsvSource({
+        "1, 2",
+        "2, 4",
+        "3, 8"
+    })
+    void getStatusNumber_shouldReturnCorrectValue(int depth, int expected) {
+        DecisionTree tree = new DecisionTree(depth);
+        assertEquals(expected, tree.getStatusNumber());
+    }
+
+    /**
+     * Verifies that the {@code isInitialized} method throws exeption when tree are not indexed.
+     */
+    @Test
+    void isInitializedWithEmptyTree_shouldThrowExeptionWithMessage() {
+        DecisionTree tree = new DecisionTree(3);
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class, () -> {
+            tree.isInitialized();
+        });
+
+        assertNotNull(ex.getMessage());
+        assertFalse(ex.getMessage().isEmpty());
+    }
+
+    /**
+     * Verifies that the {@code isInitialized} method correctly returns value true only when all nodes are initialized. 
+     */
+    @Test
+    void isInitialized_shouldWorkExactly() {
+        DecisionTree tree = new DecisionTree(1);
+        tree.rebuildIndex();
+        assertFalse(tree.isInitialized());
+        tree.getRoot().setQuestion(new EnergyQuestion(0.5));
+        assertFalse(tree.isInitialized());
+        Node root = tree.getRoot();
+        OutcomeNode leftOutcome = (OutcomeNode) root.getLeftSon();
+        assertFalse(tree.isInitialized());
+        OutcomeNode rightOutcome = (OutcomeNode) root.getRightSon();
+        leftOutcome.setStatus(new MockStatus("1"));
+        rightOutcome.setStatus(new MockStatus("2"));
+        tree.rebuildIndex();
+        assertTrue(tree.isInitialized());
     }
 }

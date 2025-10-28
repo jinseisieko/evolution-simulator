@@ -64,6 +64,34 @@ public class DecisionTree {
     }
 
     /**
+     * Constructs a decision tree with a specified depth and a pre-built root node. Root will be copied.
+     * <p>
+     * This constructor assumes that the provided {@link RootQuestionNode} already forms
+     * a valid binary decision tree of the given depth. 
+     *
+     * @param depth The depth of the tree. Must be greater than 0. <p>
+     * @param root  The root node of the decision tree. Must not be {@code null}. <p>
+     * @throws IllegalArgumentException if {@code depth} is less than or equal to 0 or if {@code root} is {@code null}. <p>
+     *
+     * @author jinseisieko
+     */
+    public DecisionTree(int depth, RootQuestionNode root) {
+        if (depth <= 0) {
+            throw new IllegalArgumentException("Depth cannot be less than or equal to zero. Got: " + depth);
+        }
+        if (root == null) {
+            throw new IllegalArgumentException("Root cannot be null");
+        }
+        this.root = (RootQuestionNode) root.copy();
+        this.depth = depth;
+        this.indexValid = false;
+        this.rebuildIndex();
+        if (!this.isInitialized()) {
+            throw new IllegalArgumentException("Root must consist initialized tree");
+        }
+    }
+
+    /**
      * Gets the root node of this decision tree.
      * <p>
      * The root node serves as the entry point for traversing the tree structure.
@@ -103,7 +131,7 @@ public class DecisionTree {
      *
      * @author jinseisieko
      */
-    public void rebuildIndex() {
+    public final void rebuildIndex() {
         List<Node> nodeList = new ArrayList<>();
         nodeList.add(null); // Index 0 is unused, reserve it.
 
@@ -292,5 +320,47 @@ public class DecisionTree {
      */
     public int getDepth() {
         return depth;
+    }
+
+    /**
+     * Node number of this decision tree. The node number is the number of all verticles in this tree
+     * 
+     * @return Node number <p>
+     * 
+     * @author jinseisieko 
+     */
+    public int getNodeNumber() {
+        return ((int) Math.pow(2, this.depth+1)) - 1;
+    }
+    
+    /**
+     * Status number of this decision tree. The status number is the number of all outcomes nodes in this tree
+     * 
+     * @return Status number <p>
+     * 
+     * @author jinseisieko 
+     */
+    public int getStatusNumber() {
+        return (int) Math.pow(2, this.depth);
+    }
+
+    /**
+     * Check is this tree initialized.
+     * Check are all tree nodes initialized.
+     * 
+     * @return true if tree is initialized <p>
+     * @throws IllegalStateException if tree is not indexed ({@link rebuildIndex()} should be called before this method) <p>
+     * 
+     * @author jinseisieko 
+     */
+    public final boolean isInitialized() {
+        boolean answer = true;
+        if (!this.indexValid) {
+            throw  new IllegalStateException("To check initialization tree should be indexed");
+        }
+        for (int i = 1; i < this.getNodeNumber() + 1; i++) {
+            answer &= this.getNodeByIndex(i).isInitialized();
+        }
+        return answer;
     }
 }

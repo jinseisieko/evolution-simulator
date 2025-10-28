@@ -1,6 +1,8 @@
 // src/test/java/org/jinseisieko/evolution/decisiontree/NodeTest.java
 package org.jinseisieko.evolution.decisiontree;
 
+import org.jinseisieko.evolution.decisiontree.stubs.EnergyQuestion;
+import org.jinseisieko.evolution.decisiontree.stubs.MockStatus;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -258,5 +260,125 @@ class NodeTest {
         Node leftChild = new Node();
         node.setLeftSon(leftChild);
         assertFalse(node.isInitialized()); // missing rightSon
+    }
+    
+    /**
+     * Tests the {@link Node#copy()} method by constructing a complete binary decision tree
+     * of depth 2 using concrete node types and test stubs ({@link EnergyQuestion}, {@link MockStatus}),
+     * and verifying that:
+     * <ul>
+     *   <li>All nodes in the copy are distinct object instances</li>
+     *   <li>Questions and statuses are correctly duplicated (by value)</li>
+     *   <li>Parent-child bidirectional links are properly re-established in the copy</li>
+     * </ul>
+     */
+    @Test
+    void copy_shouldCreateDeepCopyWithNewObjectsAndCorrectLinks() {
+        // Create mock statuses
+        MockStatus statusLL = new MockStatus("LL");
+        MockStatus statusLR = new MockStatus("LR");
+        MockStatus statusRL = new MockStatus("RL");
+        MockStatus statusRR = new MockStatus("RR");
+
+        // Create questions
+        EnergyQuestion rootQuestion = new EnergyQuestion(0.5);
+        EnergyQuestion leftQuestion = new EnergyQuestion(0.3);
+        EnergyQuestion rightQuestion = new EnergyQuestion(0.7);
+
+        // Build leaves
+        OutcomeNode outLL = new OutcomeNode();
+        outLL.setStatus(statusLL);
+        OutcomeNode outLR = new OutcomeNode();
+        outLR.setStatus(statusLR);
+        OutcomeNode outRL = new OutcomeNode();
+        outRL.setStatus(statusRL);
+        OutcomeNode outRR = new OutcomeNode();
+        outRR.setStatus(statusRR);
+
+        // Build internal nodes
+        QuestionNode qLeft = new QuestionNode();
+        qLeft.setQuestion(leftQuestion);
+        qLeft.setLeftSon(outLL);
+        qLeft.setRightSon(outLR);
+
+        QuestionNode qRight = new QuestionNode();
+        qRight.setQuestion(rightQuestion);
+        qRight.setLeftSon(outRL);
+        qRight.setRightSon(outRR);
+
+        // Build root
+        RootQuestionNode root = new RootQuestionNode();
+        root.setQuestion(rootQuestion);
+        root.setLeftSon(qLeft);
+        root.setRightSon(qRight);
+
+        // Sanity check: original tree is consistent
+        assertTrue(root.isInitialized());
+        assertTrue(qLeft.isInitialized());
+        assertTrue(qRight.isInitialized());
+        assertTrue(outLL.isInitialized());
+        assertTrue(outLR.isInitialized());
+        assertTrue(outRL.isInitialized());
+        assertTrue(outRR.isInitialized());
+
+        // Perform deep copy
+        Node copiedRoot = root.copy();
+
+        // --- 1. Verify root ---
+        assertNotNull(copiedRoot);
+        assertNotSame(root, copiedRoot);
+        assertTrue(copiedRoot instanceof RootQuestionNode);
+        RootQuestionNode cRoot = (RootQuestionNode) copiedRoot;
+        assertEquals(0.5, ((EnergyQuestion) cRoot.getQuestion()).getThreshold(), 1e-9);
+        assertNull(cRoot.getFather());
+
+        // --- 2. Verify left subtree ---
+        Node cQLeft = cRoot.getLeftSon();
+        assertNotSame(qLeft, cQLeft);
+        assertTrue(cQLeft instanceof QuestionNode);
+        QuestionNode cLeft = (QuestionNode) cQLeft;
+        assertEquals(0.3, ((EnergyQuestion) cLeft.getQuestion()).getThreshold(), 1e-9);
+        assertEquals(cRoot, cLeft.getFather());
+
+        Node cOutLL = cLeft.getLeftSon();
+        Node cOutLR = cLeft.getRightSon();
+        assertNotSame(outLL, cOutLL);
+        assertNotSame(outLR, cOutLR);
+        assertTrue(cOutLL instanceof OutcomeNode);
+        assertTrue(cOutLR instanceof OutcomeNode);
+
+        // Compare status descriptions (since MockStatus doesn't override equals)
+        assertEquals("MockStatus{LL}", ((OutcomeNode) cOutLL).getStatus().toString());
+        assertEquals("MockStatus{LR}", ((OutcomeNode) cOutLR).getStatus().toString());
+
+        assertEquals(cLeft, ((OutcomeNode) cOutLL).getFather());
+        assertEquals(cLeft, ((OutcomeNode) cOutLR).getFather());
+
+        // --- 3. Verify right subtree ---
+        Node cQRight = cRoot.getRightSon();
+        assertNotSame(qRight, cQRight);
+        assertTrue(cQRight instanceof QuestionNode);
+        QuestionNode cRight = (QuestionNode) cQRight;
+        assertEquals(0.7, ((EnergyQuestion) cRight.getQuestion()).getThreshold(), 1e-9);
+        assertEquals(cRoot, cRight.getFather());
+
+        Node cOutRL = cRight.getLeftSon();
+        Node cOutRR = cRight.getRightSon();
+        assertNotSame(outRL, cOutRL);
+        assertNotSame(outRR, cOutRR);
+        assertTrue(cOutRL instanceof OutcomeNode);
+        assertTrue(cOutRR instanceof OutcomeNode);
+
+        assertEquals("MockStatus{RL}", ((OutcomeNode) cOutRL).getStatus().toString());
+        assertEquals("MockStatus{RR}", ((OutcomeNode) cOutRR).getStatus().toString());
+
+        assertEquals(cRight, ((OutcomeNode) cOutRL).getFather());
+        assertEquals(cRight, ((OutcomeNode) cOutRR).getFather());
+
+        // --- 4. Ensure original tree is untouched ---
+        assertEquals(0.5, ((EnergyQuestion) root.getQuestion()).getThreshold(), 1e-9);
+        assertEquals("MockStatus{LL}", outLL.getStatus().toString());
+        assertEquals(qLeft, root.getLeftSon());
+        assertEquals(outLL, qLeft.getLeftSon());
     }
 }
