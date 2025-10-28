@@ -5,16 +5,16 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Класс, представляющий окно просмотра для отрисовки объектов, реализующих интерфейс {@link Drawable}.
+ * Represents a viewport for rendering objects that implement the {@link Drawable} interface.
  * <p>
- * Viewport отвечает за:
+ * The {@code Viewport} is responsible for:
  * <ul>
- *   <li>Преобразование логических координат (в диапазоне [0.0, 1.0)) в пиксельные координаты на экране.</li>
- *   <li>Применение стиля рисования ({@link DrawStyle}) к объектам перед их отрисовкой.</li>
- *   <li>Отрисовку кругов и квадратов с учетом их типа и размера.</li>
+ *   <li>Converting logical coordinates (in the range [0.0, 1.0)) to pixel coordinates on the screen.</li>
+ *   <li>Applying a visual {@link DrawStyle} to each object before rendering.</li>
+ *   <li>Delegating the actual drawing to the {@code Drawable} object based on its shape type and size.</li>
  * </ul>
  * <p>
- * Этот класс используется компонентом {@link SimulationView} для визуализации состояния симуляции.
+ * This class is used by the {@link SimulationView} component to visualize the current state of the simulation.
  *
  * @author jinseisieko
  */
@@ -26,13 +26,17 @@ public class Viewport {
     private Graphics2D graphics2D;
 
     /**
-     * Конструктор Viewport.
+     * Constructs a new {@code Viewport} with the specified dimensions and screen position.
+     * <p>
+     * Note: The {@code Graphics2D} context must be provided separately via
+     * {@link #updateGraphics2D(Graphics2D)} before any drawing operations.
      *
-     * @param graphics2D Объект Graphics2D, в котором будет производиться отрисовка.
-     * @param width      Ширина области просмотра в пикселях.
-     * @param height     Высота области просмотра в пикселях.
-     * @param posX       X-координата верхнего левого угла области просмотра на экране.
-     * @param posY       Y-координата верхнего левого угла области просмотра на экране.
+     * @param width  the width of the viewport in pixels <p>
+     * @param height the height of the viewport in pixels <p>
+     * @param posX   the X coordinate of the top-left corner of the viewport on the screen <p>
+     * @param posY   the Y coordinate of the top-left corner of the viewport on the screen <p>
+     *
+     * @author jinseisieko
      */
     public Viewport(int width, int height, int posX, int posY) {
         this.graphics2D = null;
@@ -43,8 +47,14 @@ public class Viewport {
     }
 
     /**
-     * Обновляет graphics2D для последующей отрисовки
-     * Метод должен быть обязательно вызван перед методом draw()
+     * Updates the {@code Graphics2D} context used for subsequent rendering operations.
+     * <p>
+     * This method must be called before invoking any {@code draw} method.
+     *
+     * @param graphics2D the rendering context to use; must not be {@code null} <p>
+     * @throws IllegalArgumentException if {@code graphics2D} is {@code null} <p>
+     *
+     * @author jinseisieko
      */
     public void updateGraphics2D(Graphics2D graphics2D) {
         if (graphics2D == null) {
@@ -54,38 +64,43 @@ public class Viewport {
     }
 
     /**
-     * Отрисовывает один объект, реализующий интерфейс {@link Drawable}.
+     * Renders a single {@link Drawable} object.
      * <p>
-     * Метод преобразует логические координаты и размер объекта в пиксельные,
-     * применяет его стиль рисования и вызывает соответствующий метод отрисовки
-     * в зависимости от типа формы объекта.
+     * This method converts the object's logical position and size into pixel coordinates,
+     * applies its visual style, and delegates the actual drawing to the object's
+     * {@link Drawable#draw(Graphics2D, int, int, int)} method.
      *
-     * @param drawable Объект для отрисовки.
+     * @param drawable the object to render; must not be {@code null} <p>
+     * @throws IllegalStateException if {@link #updateGraphics2D(Graphics2D)} has not been called <p>
+     *
+     * @author jinseisieko
      */
     public void draw(Drawable drawable) {
         if (this.graphics2D == null) {
             throw new IllegalStateException("graphics2D must be updated before drawing");
         }
-        // Применяем стиль объекта
+        // Apply the object's visual style
         applyStyle(drawable.getStyle());
-        // Преобразуем логические координаты и размер в пиксельные
+        // Convert logical coordinates and size to pixel values
         int pixelX = toPixelX(drawable.getX());
         int pixelY = toPixelY(drawable.getY());
         int pixelSize = toPixelSize(drawable.getSize());
 
-        // Отображаем объект в зависимости от его типа формы
-        switch (drawable.getShapeType()) {
-            case CIRCLE -> drawCircle(pixelX, pixelY, pixelSize);
-            case SQUARE -> drawSquare(pixelX, pixelY, pixelSize / 2); // halfSize для квадрата
-            default -> throw new IllegalStateException("Неизвестный тип формы: " + drawable.getShapeType());
-        }
+        // Delegate actual rendering to the drawable object
+        drawable.draw(graphics2D, pixelX, pixelY, pixelSize);
+
+        // Clear reference to avoid accidental reuse without reinitialization
         this.graphics2D = null;
     }
 
     /**
-     * Отрисовывает список объектов, реализующих интерфейс {@link Drawable}.
+     * Renders a list of {@link Drawable} objects.
+     * <p>
+     * Each object is drawn in the order it appears in the list.
      *
-     * @param drawables Список объектов для отрисовки.
+     * @param drawables the list of objects to render; must not be {@code null} <p>
+     *
+     * @author jinseisieko
      */
     public void drawAll(List<Drawable> drawables) {
         for (Drawable drawable : drawables) {
@@ -94,68 +109,52 @@ public class Viewport {
     }
 
     /**
-     * Внутренний метод для отрисовки круга.
+     * Applies the specified drawing style to the current {@code Graphics2D} context.
      *
-     * @param cx     Центральная X-координата круга в пикселях.
-     * @param cy     Центральная Y-координата круга в пикселях.
-     * @param radius Радиус круга в пикселях.
-     */
-    private void drawCircle(int cx, int cy, int radius) {
-        // Для круга радиус равен половине диаметра, поэтому мы используем radius как полуширину и полувысоту
-        int diameter = radius * 2;
-        graphics2D.drawOval(cx - radius, cy - radius, diameter, diameter);
-    }
-
-    /**
-     * Внутренний метод для отрисовки квадрата.
+     * @param style the visual style to apply; must not be {@code null} <p>
      *
-     * @param cx       Центральная X-координата квадрата в пикселях.
-     * @param cy       Центральная Y-координата квадрата в пикселях.
-     * @param halfSize Полуразмер квадрата (расстояние от центра до стороны) в пикселях.
-     */
-    private void drawSquare(int cx, int cy, int halfSize) {
-        // Для квадрата ширина и высота равны удвоенному полуразмеру
-        int sideLength = halfSize * 2;
-        graphics2D.drawRect(cx - halfSize, cy - halfSize, sideLength, sideLength);
-    }
-
-    /**
-     * Применяет стиль рисования к текущему контексту Graphics2D.
-     *
-     * @param style Стиль рисования для применения.
+     * @author jinseisieko
      */
     private void applyStyle(DrawStyle style) {
         style.apply(graphics2D);
     }
 
     /**
-     * Преобразует логическую X-координату (в диапазоне [0.0, 1.0)) в пиксельную координату.
+     * Converts a logical X coordinate (in the range [0.0, 1.0)) to a pixel X coordinate.
      *
-     * @param x Логическая X-координата.
-     * @return Пиксельная X-координата.
+     * @param x the logical X coordinate <p>
+     * @return the corresponding pixel X coordinate, relative to the screen origin <p>
+     *
+     * @author jinseisieko
      */
     private int toPixelX(double x) {
         return posX + (int) Math.round(x * width);
     }
 
     /**
-     * Преобразует логическую Y-координату (в диапазоне [0.0, 1.0)) в пиксельную координату.
+     * Converts a logical Y coordinate (in the range [0.0, 1.0)) to a pixel Y coordinate.
      *
-     * @param y Логическая Y-координата.
-     * @return Пиксельная Y-координата.
+     * @param y the logical Y coordinate <p>
+     * @return the corresponding pixel Y coordinate, relative to the screen origin <p>
+     *
+     * @author jinseisieko
      */
     private int toPixelY(double y) {
         return posY + (int) Math.round(y * height);
     }
 
     /**
-     * Преобразует логический размер (например, диаметр или длина стороны) в пиксельный размер.
+     * Converts a logical size (e.g., diameter or side length) to a pixel size.
+     * <p>
+     * The conversion uses the average of the viewport's width and height to maintain
+     * consistent scaling regardless of aspect ratio.
      *
-     * @param size Логический размер.
-     * @return Пиксельный размер.
+     * @param size the logical size (unitless, typically in [0.0, 1.0)) <p>
+     * @return the corresponding pixel size, rounded to the nearest integer <p>
+     *
+     * @author jinseisieko
      */
     private int toPixelSize(double size) {
-        // Используем среднее арифметическое ширины и высоты для масштабирования размера
         return (int) Math.round(size * (width + height) / 2.0);
     }
 }
