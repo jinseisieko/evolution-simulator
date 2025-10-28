@@ -63,7 +63,7 @@ public class DecisionTreeBrain extends DecisionTree implements Brain {
         java.util.Random random = new java.util.Random();
         brain.rebuildIndex();
         int nodeNumber = brain.getNodeNumber();
-        int statusNumber =(int) Math.pow(2, depth);
+        int statusNumber = brain.getStatusNumber();
         for (int i = 1; i < nodeNumber+1; i++) {
             Node node = brain.getNodeByIndex(i);
             if (i > nodeNumber - statusNumber) {

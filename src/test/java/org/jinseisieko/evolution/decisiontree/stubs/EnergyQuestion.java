@@ -25,4 +25,9 @@ public final class EnergyQuestion implements Question {
     public int hashCode() {
         return Double.hashCode(threshold);
     }
+
+    @Override
+    public String toString() {
+        return "EnergyQuestion{"+this.threshold+"}";
+    }
 }
