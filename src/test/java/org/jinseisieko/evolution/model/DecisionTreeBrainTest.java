@@ -12,10 +12,12 @@ import org.jinseisieko.evolution.decisiontree.stubs.MockStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class DecisionTreeBrainTest {
     @Test
-    void createRandom_shloudWorkExactly() {
+    void createRandom_shloudWorkExactlyAndUseAllInputValues() {
         Question[] questions = {new EnergyQuestion(1.0), new EnergyQuestion(2.0)};
         Status[] statuses = {new MockStatus("1"), new MockStatus("2")};
         int depth = 15;
@@ -49,5 +51,25 @@ class DecisionTreeBrainTest {
         }  
         assertEquals(nodeNumber, eq1+eq2+ms1+ms2);
         assertTrue(eq1 != 0 && eq2 != 0 && ms1 != 0 && ms2 != 0);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints={1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    void cross_shouldCreateFullBinaryTree(int depth) {
+        Question[] questions = {new EnergyQuestion(1.0), new EnergyQuestion(2.0)};
+        Status[] statuses = {new MockStatus("1"), new MockStatus("2")};
+        DecisionTreeBrain brain1 = DecisionTreeBrain.createRandom(depth, questions, statuses);
+        brain1.rebuildIndex();
+        DecisionTreeBrain brain2 = DecisionTreeBrain.createRandom(depth, questions, statuses);
+        brain2.rebuildIndex();
+        DecisionTreeBrain cBrain = DecisionTreeBrain.cross(brain1, brain2);
+        cBrain.rebuildIndex();
+        int nodeNumber = 0;
+        int i  = 1;
+        while (cBrain.getNodeByIndex(i) != null) { 
+            i++;
+            nodeNumber++;
+        }
+        assertEquals(brain1.getNodeNumber(), nodeNumber);
     }
 }
