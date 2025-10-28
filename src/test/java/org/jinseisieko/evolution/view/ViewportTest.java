@@ -52,9 +52,9 @@ class ViewportTest {
         graphics2D.dispose();
 
         Color pixelAtCorner = new Color(image.getRGB(0, 0), true);
-        assertTrue(pixelAtCorner.getRed() < 50, "Пиксель в левом верхнем углу должен быть темным");
-        assertTrue(pixelAtCorner.getGreen() < 50, "Пиксель в левом верхнем углу должен быть темным");
-        assertTrue(pixelAtCorner.getBlue() < 50, "Пиксель в левом верхнем углу должен быть темным");
+        assertTrue(pixelAtCorner.getRed() < 50);
+        assertTrue(pixelAtCorner.getGreen() < 50);
+        assertTrue(pixelAtCorner.getBlue() < 50);
     }
 
     @Test
