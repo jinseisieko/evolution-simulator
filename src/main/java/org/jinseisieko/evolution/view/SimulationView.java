@@ -1,7 +1,7 @@
 // src/main/java/org/jinseisieko/evolution/view/SimulationView.java
 package org.jinseisieko.evolution.view;
 
-import org.jinseisieko.evolution.simulation.Simulation;
+import org.jinseisieko.evolution.model.BasicSimulation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ public class SimulationView extends JPanel {
     private static final int WINDOW_WIDTH = 800;
     private static final int WINDOW_HEIGHT = 600;
 
-    private final Simulation simulation;
+    private final BasicSimulation simulation;
     private final JFrame frame;
 
     // Временные переменные для анимации
@@ -18,7 +18,7 @@ public class SimulationView extends JPanel {
     private int frameCount = 0;
     private long lastFpsTime = System.currentTimeMillis();
 
-    public SimulationView(Simulation simulation, JFrame frame) {
+    public SimulationView(BasicSimulation simulation, JFrame frame) {
         this.simulation = simulation;
         this.frame = frame;
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
