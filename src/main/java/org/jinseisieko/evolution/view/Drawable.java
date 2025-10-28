@@ -1,9 +1,9 @@
 // src/main/java/org/jinseisieko/evolution/view/Drawable.java
 package org.jinseisieko.evolution.view;
 
-import java.awt.Shape;
+import java.awt.Graphics2D;
 
-import org.jinseisieko.evolution.basic.ShapeType;
+import org.jinseisieko.evolution.basic.Shape;
 
 /**
  * Represents an object that can be rendered by a {@link Viewport}.
@@ -14,13 +14,6 @@ import org.jinseisieko.evolution.basic.ShapeType;
  * @author jinseisieko
  */
 public interface Drawable extends Shape {
-
-     /**
-     * Returns the shape type of the object,
-     *
-     * @return One of the enum elements of ShapeType
-     */
-    ShapeType getShapeType();
     
     /**
      * Returns the X coordinate of the object in logical (simulation) space,
@@ -52,4 +45,6 @@ public interface Drawable extends Shape {
      * @return the draw style (fill, stroke, opacity, etc.) <p>
      */
     DrawStyle getStyle();
+
+    void draw(Graphics2D g2d, int pixelX, int pixelY, int pixelSize);
 }

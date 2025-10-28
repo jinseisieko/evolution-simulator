@@ -74,11 +74,8 @@ public class Viewport {
         int pixelSize = toPixelSize(drawable.getSize());
 
         // Отображаем объект в зависимости от его типа формы
-        switch (drawable.getShapeType()) {
-            case CIRCLE -> drawCircle(pixelX, pixelY, pixelSize);
-            case SQUARE -> drawSquare(pixelX, pixelY, pixelSize / 2); // halfSize для квадрата
-            default -> throw new IllegalStateException("Неизвестный тип формы: " + drawable.getShapeType());
-        }
+        drawable.draw(graphics2D, pixelX, pixelY, pixelSize);
+
         this.graphics2D = null;
     }
 
@@ -91,32 +88,6 @@ public class Viewport {
         for (Drawable drawable : drawables) {
             draw(drawable);
         }
-    }
-
-    /**
-     * Внутренний метод для отрисовки круга.
-     *
-     * @param cx     Центральная X-координата круга в пикселях.
-     * @param cy     Центральная Y-координата круга в пикселях.
-     * @param radius Радиус круга в пикселях.
-     */
-    private void drawCircle(int cx, int cy, int radius) {
-        // Для круга радиус равен половине диаметра, поэтому мы используем radius как полуширину и полувысоту
-        int diameter = radius * 2;
-        graphics2D.drawOval(cx - radius, cy - radius, diameter, diameter);
-    }
-
-    /**
-     * Внутренний метод для отрисовки квадрата.
-     *
-     * @param cx       Центральная X-координата квадрата в пикселях.
-     * @param cy       Центральная Y-координата квадрата в пикселях.
-     * @param halfSize Полуразмер квадрата (расстояние от центра до стороны) в пикселях.
-     */
-    private void drawSquare(int cx, int cy, int halfSize) {
-        // Для квадрата ширина и высота равны удвоенному полуразмеру
-        int sideLength = halfSize * 2;
-        graphics2D.drawRect(cx - halfSize, cy - halfSize, sideLength, sideLength);
     }
 
     /**
