@@ -46,5 +46,19 @@ public interface Drawable extends Shape {
      */
     DrawStyle getStyle();
 
+    /**
+     * Renders this object using the provided {@code Graphics2D} context at the specified pixel coordinates and size.
+     * <p>
+     * The method is responsible for drawing the object's shape (e.g., circle or square) using the pixel-based
+     * position and size supplied by the {@link Viewport}. The visual appearance should respect the style returned
+     * by {@link #getStyle()}, although the {@code Viewport} typically applies the style before invoking this method.
+     *
+     * @param g2d       the {@code Graphics2D} context to draw on; must not be {@code null} <p>
+     * @param pixelX    the X coordinate in screen pixels where the object should be rendered <p>
+     * @param pixelY    the Y coordinate in screen pixels where the object should be rendered <p>
+     * @param pixelSize the size (e.g., diameter or side length) in screen pixels <p>
+     *
+     * @author jinseisieko
+     */
     void draw(Graphics2D g2d, int pixelX, int pixelY, int pixelSize);
 }
