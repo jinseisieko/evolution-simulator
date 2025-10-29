@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+// src/test/java/org/jinseisieko/evolution/base/stubs/TestAgent.java
 
-package org.jinseisieko.evolution.model.stubs;
+package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Question;
-import org.jinseisieko.evolution.model.Agent;
+import org.jinseisieko.evolution.base.Agent;
 
 /**
  *

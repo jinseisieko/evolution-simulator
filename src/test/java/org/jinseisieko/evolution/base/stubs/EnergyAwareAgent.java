@@ -1,11 +1,11 @@
-// src/test/java/org/jinseisieko/evolution/model/stubs/EnergyAwareAgent.java
-package org.jinseisieko.evolution.model.stubs;
+// src/test/java/org/jinseisieko/evolution/base/stubs/FirstStatus.java
+package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Question;
 import org.jinseisieko.evolution.decisiontree.stubs.EnergyQuestion;
 import org.jinseisieko.evolution.decisiontree.stubs.MockStatus;
-import org.jinseisieko.evolution.model.Agent;
+import org.jinseisieko.evolution.base.Agent;
 
 public class EnergyAwareAgent extends Agent {
     public EnergyAwareAgent(Point initialCoordinates, double size) {

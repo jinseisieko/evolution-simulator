@@ -1,5 +1,5 @@
-// src/test/java/org/jinseisieko/evolution/model/EntityTest.java
-package org.jinseisieko.evolution.model;
+// src/test/java/org/jinseisieko/evolution/base/EntityTest.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.basic.ShapeType;

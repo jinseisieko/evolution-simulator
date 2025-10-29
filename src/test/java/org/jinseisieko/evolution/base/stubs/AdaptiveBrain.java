@@ -1,12 +1,12 @@
-// src/test/java/org/jinseisieko/evolution/model/stubs/AdaptiveBrain.java
-package org.jinseisieko.evolution.model.stubs;
+// src/test/java/org/jinseisieko/evolution/base/stubs/AdaptiveBrain.java
+package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Answerer;
 import org.jinseisieko.evolution.bindingcomponents.Question;
 import org.jinseisieko.evolution.bindingcomponents.Status;
 import org.jinseisieko.evolution.decisiontree.stubs.EnergyQuestion;
 import org.jinseisieko.evolution.decisiontree.stubs.MockStatus;
-import org.jinseisieko.evolution.model.Brain;
+import org.jinseisieko.evolution.base.Brain;
 
 public final class AdaptiveBrain implements Brain {
     private final Question energyQuestion;

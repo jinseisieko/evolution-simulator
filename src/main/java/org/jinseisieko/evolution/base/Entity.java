@@ -1,5 +1,5 @@
-// src/main/java/org/jinseisieko/evolution/model/Entity.java
-package org.jinseisieko.evolution.model;
+// src/main/java/org/jinseisieko/evolution/base/Entity.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.basic.Circle;
 import org.jinseisieko.evolution.basic.Point;

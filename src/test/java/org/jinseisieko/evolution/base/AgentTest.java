@@ -1,12 +1,13 @@
-package org.jinseisieko.evolution.model;
+// src/test/java/org/jinseisieko/evolution/base/AgentTest.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.basic.Point;
-import org.jinseisieko.evolution.model.stubs.AdaptiveBrain;
-import org.jinseisieko.evolution.model.stubs.EnergyAwareAgent;
-import org.jinseisieko.evolution.model.stubs.FirstStatus;
-import org.jinseisieko.evolution.model.stubs.SecondStatus;
-import org.jinseisieko.evolution.model.stubs.SimpleBrain;
-import org.jinseisieko.evolution.model.stubs.TestAgent;
+import org.jinseisieko.evolution.base.stubs.AdaptiveBrain;
+import org.jinseisieko.evolution.base.stubs.EnergyAwareAgent;
+import org.jinseisieko.evolution.base.stubs.FirstStatus;
+import org.jinseisieko.evolution.base.stubs.SecondStatus;
+import org.jinseisieko.evolution.base.stubs.SimpleBrain;
+import org.jinseisieko.evolution.base.stubs.TestAgent;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

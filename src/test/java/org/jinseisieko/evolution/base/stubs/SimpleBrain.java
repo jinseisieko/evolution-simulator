@@ -1,10 +1,10 @@
-// src/test/java/org/jinseisieko/evolution/model/stubs/SimpleBrain.java
-package org.jinseisieko.evolution.model.stubs;
+// src/test/java/org/jinseisieko/evolution/base/stubs/SimpleBrain.java
+package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Answerer;
 import org.jinseisieko.evolution.bindingcomponents.Question;
 import org.jinseisieko.evolution.bindingcomponents.Status;
-import org.jinseisieko.evolution.model.Brain;
+import org.jinseisieko.evolution.base.Brain;
 
 public final class SimpleBrain implements Brain {
     private final Question q;

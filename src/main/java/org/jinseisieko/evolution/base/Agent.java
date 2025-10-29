@@ -1,5 +1,5 @@
-// src/main/java/org/jinseisieko/evolution/model/Agent.java
-package org.jinseisieko.evolution.model;
+// src/main/java/org/jinseisieko/evolution/base/Agent.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Answerer;

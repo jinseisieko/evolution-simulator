@@ -1,5 +1,5 @@
-// src/main/java/org/jinseisieko/evolution/model/DecisionTreeBrain.java
-package org.jinseisieko.evolution.model;
+// src/main/java/org/jinseisieko/evolution/base/DecisionTreeBrain.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.bindingcomponents.Answerer;
 import org.jinseisieko.evolution.bindingcomponents.Question;

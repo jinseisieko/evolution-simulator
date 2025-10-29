@@ -1,7 +1,7 @@
 // src/main/java/org/jinseisieko/evolution/view/SimulationView.java
 package org.jinseisieko.evolution.view;
 
-import org.jinseisieko.evolution.model.BasicSimulation;
+import org.jinseisieko.evolution.base.BasicSimulation;
 
 import javax.swing.*;
 import java.awt.*;
