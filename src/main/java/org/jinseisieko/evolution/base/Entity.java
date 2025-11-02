@@ -37,12 +37,12 @@ public class Entity extends Circle {
      * All dynamic properties—speed, acceleration, and angular speed—are initialized to zero.
      *
      * @param initialCoordinates the starting position (any real coordinates; will be normalized)
-     * @param size the radius of the entity’s circular body (must be positive)
+     * @param radius the radius of the entity’s circular body (must be positive)
      *
      * @author jinseisieko
      */
-    public Entity(Point initialCoordinates, double size) {
-        super(initialCoordinates, size);
+    public Entity(Point initialCoordinates, double radius) {
+        super(initialCoordinates, radius);
         this.speed = 0;
         this.acceleration = 0;
         this.angularSpeed = 0;
@@ -57,12 +57,12 @@ public class Entity extends Circle {
      *
      * @param x the initial X coordinate (any real number)
      * @param y the initial Y coordinate (any real number)
-     * @param size the radius of the entity’s circular body
+     * @param radius the radius of the entity’s circular body
      *
      * @author jinseisieko
      */
-    public Entity(double x, double y, double size) {
-        this(new Point(x, y), size);
+    public Entity(double x, double y, double radius) {
+        this(new Point(x, y), radius);
     }
 
     /**

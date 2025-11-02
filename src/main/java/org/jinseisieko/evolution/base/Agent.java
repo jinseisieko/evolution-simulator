@@ -30,7 +30,7 @@ public abstract class Agent extends Entity implements Answerer {
      * Constructs an agent with the specified initial state and energy cost parameters.
      *
      * @param initialCoordinates the starting position of the agent (will be normalized to [0,1)) <p>
-     * @param size the radius of the agent's body <p>
+     * @param radius the radius of the agent's body <p>
      * @param brainUpdateTime the interval (in seconds) between brain updates; must be positive <p>
      * @param brain the decision-making component; must not be null <p>
      * @param BRAIN_ENERGY_COST energy consumed each time the brain is used; must be non-negative <p>
@@ -42,14 +42,14 @@ public abstract class Agent extends Entity implements Answerer {
      */
     public Agent(
             Point initialCoordinates,
-            double size,
+            double radius,
             double brainUpdateTime,
             Brain brain,
             double BRAIN_ENERGY_COST,
             double SPEED_ENERGY_COST, 
             double ANGULAR_SPEED_ENERGY_COST
         ) {
-        super(initialCoordinates, size);
+        super(initialCoordinates, radius);
         if (brainUpdateTime <= 0) {
             throw new IllegalArgumentException("Brain update time should be more than zero");
         }

@@ -3,12 +3,12 @@ package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.basic.Point;
 
-public class Food extends Entity{ 
+public class Food extends Entity { 
     private double health;
     private final double TIME_HEALTH_COST;
 
-    public Food(Point initialCoordinates, double size, double TIME_HEALTH_COST) {
-        super(initialCoordinates, size);
+    public Food(Point initialCoordinates, double radius, double TIME_HEALTH_COST) {
+        super(initialCoordinates, radius);
         this.health = 1.0;
         this.TIME_HEALTH_COST = TIME_HEALTH_COST;
     }
@@ -16,10 +16,6 @@ public class Food extends Entity{
     @Override
     public void updateEntity(double dt) {
         this.health -= TIME_HEALTH_COST;
-    }
-
-    public double getTIME_HEALTH_COST() {
-        return TIME_HEALTH_COST;
     }
 
     public double getHealth() {
