@@ -12,6 +12,13 @@ import org.jinseisieko.evolution.bindingcomponents.Status;
  * Each concrete subclass must implement {@link #statusActivity()} to define how the current
  * status influences the agent's behavior. Additionally, subclasses must implement
  * {@link #answer(Question)} to respond to questions posed during decision-making.
+ * <p>
+ * This class extends {@link Entity}, inheriting its physical properties (position, radius, 
+ * orientation, speed, acceleration, angular speed) and its integration with the 
+ * {@link BasicSimulation} environment. Agents participate in the simulation's update and 
+ * drawing cycles as part of the {@code BasicSimulation} entity collection. The agent's 
+ * state is updated over time by the simulation loop via the {@link #updateEntity(double)} 
+ * method, which integrates both physical motion and energy consumption.
  *
  * @author jinseisieko
  */
@@ -33,6 +40,7 @@ public abstract class Agent extends Entity implements Answerer {
      * @param radius the radius of the agent's body <p>
      * @param brainUpdateTime the interval (in seconds) between brain updates; must be positive <p>
      * @param brain the decision-making component; must not be null <p>
+     * @param simulation The simulation context this agent belongs to, passed to the parent {@code Entity} class. <p>
      * @param BRAIN_ENERGY_COST energy consumed each time the brain is used; must be non-negative <p>
      * @param SPEED_ENERGY_COST energy consumed per unit of linear speed per one time unit; must be non-negative <p>
      * @param ANGULAR_SPEED_ENERGY_COST energy consumed per unit of angular speed per one time unit; must be non-negative <p>
@@ -45,11 +53,12 @@ public abstract class Agent extends Entity implements Answerer {
             double radius,
             double brainUpdateTime,
             Brain brain,
+            BasicSimulation simulation,
             double BRAIN_ENERGY_COST,
             double SPEED_ENERGY_COST, 
             double ANGULAR_SPEED_ENERGY_COST
         ) {
-        super(initialCoordinates, radius);
+        super(initialCoordinates, radius, simulation);
         if (brainUpdateTime <= 0) {
             throw new IllegalArgumentException("Brain update time should be more than zero");
         }
@@ -210,13 +219,16 @@ public abstract class Agent extends Entity implements Answerer {
     /**
      * Updates the agent's state over the given time interval.
      * <p>
-     * This method:
+     * This method extends the physical update behavior inherited from {@link Entity}
+     * by integrating the agent's decision-making and energy systems within the simulation loop.
+     * It performs the following actions:
      * <ul>
      *   <li>Triggers brain execution if enough time has passed since the last update</li>
      *   <li>Applies status-driven behavior via {@link #statusActivity()}</li>
      *   <li>Consumes energy proportional to current speed and angular speed</li>
-     *   <li>Updates position and orientation using physics from the superclass</li>
+     *   <li>Delegates the physical state update (position, orientation) to the parent {@code Entity.updateEntity(dt)} method.</li>
      * </ul>
+     * This ensures the agent's behavior and energy state evolve over time as part of the {@link BasicSimulation}.
      *
      * @param dt the time step duration in seconds <p>
      *

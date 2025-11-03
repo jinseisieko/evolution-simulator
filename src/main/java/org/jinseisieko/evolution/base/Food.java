@@ -7,8 +7,8 @@ public class Food extends Entity {
     private double health;
     private final double TIME_HEALTH_COST;
 
-    public Food(Point initialCoordinates, double radius, double TIME_HEALTH_COST) {
-        super(initialCoordinates, radius);
+    public Food(Point initialCoordinates, double radius, BasicSimulation simulation, double TIME_HEALTH_COST) {
+        super(initialCoordinates, radius, simulation);
         this.health = 1.0;
         this.TIME_HEALTH_COST = TIME_HEALTH_COST;
     }

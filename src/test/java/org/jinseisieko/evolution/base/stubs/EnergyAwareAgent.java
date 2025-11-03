@@ -14,6 +14,7 @@ public class EnergyAwareAgent extends Agent {
             size,
             2.0, // brainUpdateTime
             new AdaptiveBrain(),
+            null,
             0.02, // BRAIN_ENERGY_COST
             0.01, // SPEED_ENERGY_COST
             0.005 // ANGULAR_SPEED_ENERGY_COST

@@ -41,7 +41,7 @@ class EntityTest {
     @Test
     void constructorWithPoint_initializesAllFieldsCorrectly() {
         Point coordinates = new Point(0.5, 0.5);
-        Entity entity = new Entity(coordinates, 0.01);
+        Entity entity = new Entity(coordinates, 0.01, null);
         assertEquals(coordinates.getX(), entity.getX(), 1e-12);
         assertEquals(coordinates.getY(), entity.getY(), 1e-12);
         assertEquals(0, entity.getSpeed(), 1e-12);
@@ -61,7 +61,7 @@ class EntityTest {
      */
     @Test
     void constructorWithCoordinates_initializesAllFieldsCorrectly() {
-        Entity entity = new Entity(0.5, 0.5, 0.01);
+        Entity entity = new Entity(0.5, 0.5, 0.01, null);
         assertEquals(0.5, entity.getX(), 1e-12);
         assertEquals(0.5, entity.getY(), 1e-12);
         assertEquals(0, entity.getSpeed(), 1e-12);
@@ -89,7 +89,7 @@ class EntityTest {
         "-10, -10"
     })
     void setAcceleration_storesValueExactly(double input, double expected) {
-        Entity entity = new Entity(0.1, 0.1, 0.01);
+        Entity entity = new Entity(0.1, 0.1, 0.01, null);
         entity.setAcceleration(input);
         assertEquals(expected, entity.getAcceleration(), 1e-12);
     }
@@ -108,7 +108,7 @@ class EntityTest {
         "-10, -10"
     })
     void setSpeed_storesValueExactly(double input, double expected) {
-        Entity entity = new Entity(0.1, 0.1, 0.01);
+        Entity entity = new Entity(0.1, 0.1, 0.01, null);
         entity.setSpeed(input);
         assertEquals(expected, entity.getSpeed(), 1e-12);
     }
@@ -134,7 +134,7 @@ class EntityTest {
         "-12.566370614359172, 0.0"                 // -4π → 0
     })
     void setAngleRad_normalizesTo_0_to_2Pi(double input, double expected) {
-        Entity entity = new Entity(0.1, 0.1, 0.01);
+        Entity entity = new Entity(0.1, 0.1, 0.01, null);
         entity.setAngleRad(input);
         assertEquals(expected, entity.getAngle(), 1e-12);
     }
@@ -158,7 +158,7 @@ class EntityTest {
         "-720.5, 6.274458660919615"  // ≈ -0.5° → 359.5° in radians
     })
     void setAngleDeg_convertsAndNormalizesCorrectly(double degrees, double expectedRad) {
-        Entity entity = new Entity(0.1, 0.1, 0.01);
+        Entity entity = new Entity(0.1, 0.1, 0.01, null);
         entity.setAngleDeg(degrees);
         assertEquals(expectedRad, entity.getAngle(), 1e-12);
     }
@@ -177,7 +177,7 @@ class EntityTest {
         -2 * Math.PI - 0.1
     })
     void setAngleRad_handlesExtremeValues(double inputAngle) {
-        Entity entity = new Entity(0, 0, 0.01);
+        Entity entity = new Entity(0, 0, 0.01, null);
         entity.setAngleRad(inputAngle);
         double angle = entity.getAngle();
         assertTrue(angle >= 0 && angle < 2 * Math.PI,
@@ -200,7 +200,7 @@ class EntityTest {
         "-12.566370614359172, -12.566370614359172"
     })
     void setAngularSpeedRad_storesValueExactly(double input, double expected) {
-        Entity entity = new Entity(0.1, 0.1, 0.01);
+        Entity entity = new Entity(0.1, 0.1, 0.01, null);
         entity.setAngularSpeedRad(input);
         assertEquals(expected, entity.getAngularSpeed(), 1e-12);
     }
@@ -222,7 +222,7 @@ class EntityTest {
         "-720.5, -12.57509726062376"
     })
     void setAngularAccelerationDeg_convertsCorrectly(double degrees, double expectedRad) {
-        Entity entity = new Entity(0.1, 0.1, 0.01);
+        Entity entity = new Entity(0.1, 0.1, 0.01, null);
         entity.setAngularSpeedDeg(degrees);
         assertEquals(Math.toRadians(degrees), entity.getAngularSpeed(), 1e-12);
     }
@@ -254,7 +254,7 @@ class EntityTest {
         double expectedX,
         double expectedY,
         double expectedAngle) {
-        Entity entity = new Entity(x, y, 0.01);
+        Entity entity = new Entity(x, y, 0.01, null);
         entity.setAngleRad(angle);
         entity.setAngularSpeedRad(angularAcceleration);
         entity.setAcceleration(acceleration);
@@ -273,7 +273,7 @@ class EntityTest {
      */
     @Test
     void updateEntity_movesInDirectionOfAngle() {
-        Entity entity = new Entity(0, 0, 0.01);
+        Entity entity = new Entity(0, 0, 0.01, null);
         entity.setAngleRad(0);          // face +X
         entity.setSpeed(10);
         entity.updateEntity(0.1);       // move 1.0 in X
@@ -292,7 +292,7 @@ class EntityTest {
      */
     @Test
     void updateEntity_withZeroDt_preservesState() {
-        Entity entity = new Entity(1, 1, 0.01);
+        Entity entity = new Entity(1, 1, 0.01, null);
         entity.setSpeed(5);
         entity.setAcceleration(10);
         entity.setAngleRad(Math.PI / 4);
@@ -318,7 +318,7 @@ class EntityTest {
      */
     @Test
     void updateEntity_accumulatesAngleWithAngularAcceleration() {
-        Entity entity = new Entity(0, 0, 0.01);
+        Entity entity = new Entity(0, 0, 0.01, null);
         entity.setAngleRad(0);
         entity.setAngularSpeedRad(2.0); // rad/s²
         double dt = 0.5;
@@ -341,7 +341,7 @@ class EntityTest {
      */
     @Test
     void entity_isSubclassOfCircle() {
-        Entity entity = new Entity(1.4, 2.2, 0.5);
+        Entity entity = new Entity(1.4, 2.2, 0.5, null);
         assertTrue(entity instanceof org.jinseisieko.evolution.basic.Circle);
         assertEquals(0.4, entity.getX(), 1e-12);  // normalized by Point
         assertEquals(0.2, entity.getY(), 1e-12);  // normalized by Point

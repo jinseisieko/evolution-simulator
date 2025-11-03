@@ -19,6 +19,7 @@ import org.jinseisieko.evolution.basic.Point;
  * The entity’s position and orientation are updated via Euler integration in the {@code updateEntity(dt)} method,
  * which respects the underlying toroidal geometry through the inherited {@code shift()} operation.
  * All motion is confined to the unit torus [0,1) × [0,1), with automatic wrap-around at boundaries.
+ * This class is managed within a {@link BasicSimulation} context.
  *
  * @author jinseisieko
  */
@@ -28,6 +29,7 @@ public class Entity extends Circle {
     private double speed;
     private double acceleration;
     private double angularSpeed;
+    private final BasicSimulation simulation;
 
     /**
      * Constructs an entity at the specified initial coordinates with a given size (radius).
@@ -38,14 +40,16 @@ public class Entity extends Circle {
      *
      * @param initialCoordinates the starting position (any real coordinates; will be normalized)
      * @param radius the radius of the entity’s circular body (must be positive)
+     * @param simulation The simulation context this entity belongs to.
      *
      * @author jinseisieko
      */
-    public Entity(Point initialCoordinates, double radius) {
+    public Entity(Point initialCoordinates, double radius, BasicSimulation simulation) {
         super(initialCoordinates, radius);
         this.speed = 0;
         this.acceleration = 0;
         this.angularSpeed = 0;
+        this.simulation = simulation;
     }
 
     /**
@@ -58,11 +62,12 @@ public class Entity extends Circle {
      * @param x the initial X coordinate (any real number)
      * @param y the initial Y coordinate (any real number)
      * @param radius the radius of the entity’s circular body
+     * @param simulation The simulation context this entity belongs to.
      *
      * @author jinseisieko
      */
-    public Entity(double x, double y, double radius) {
-        this(new Point(x, y), radius);
+    public Entity(double x, double y, double radius, BasicSimulation simulation) {
+        this(new Point(x, y), radius, simulation);
     }
 
     /**
@@ -228,5 +233,18 @@ public class Entity extends Circle {
             this.speed * Math.cos(this.angle) * dt,
             this.speed * Math.sin(this.angle) * dt
         ));
+    }
+
+    /**
+     * Retrieves the simulation context to which this entity belongs.
+     * <p>
+     * This method provides access to the {@link BasicSimulation} instance managing this entity.
+     *
+     * @return The simulation instance.
+     *
+     * @author jinseisieko
+     */
+    public BasicSimulation getSimulation() {
+        return simulation;
     }
 }
