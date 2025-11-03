@@ -9,9 +9,9 @@ public interface BasicSimulation
 {
     public void update(double deltaTime);
     public void draw(Graphics2D g2d);
-    public List<Agent> getAgents();
-    public List<Agent> getAgentsNearby(double x, double y);
-    public List<Agent> getAgentsNearby(Point position);
+    public List<Entity> getEntities();
+    public List<Entity> getEntitiesNearby(double x, double y);
+    public List<Entity> getEntitiesNearby(Point position);
 
 }
 

@@ -8,10 +8,10 @@ import java.util.List;
 
 public class Simulation implements BasicSimulation {
 
-    private final List<Agent> agents;
+    private final List<Entity> entities;
 
     public Simulation() {
-        this.agents = new ArrayList<>();
+        this.entities = new ArrayList<>();
     }
 
     @Override
@@ -25,22 +25,21 @@ public class Simulation implements BasicSimulation {
     }
 
     public void addAgent(Agent agent) {
-        this.agents.add(agent);
+        this.entities.add(agent);
     }
 
     @Override
-    public List<Agent> getAgents() {
-        return agents;
+    public List<Entity> getEntities() {
+        return entities;
     }
 
     @Override
-    public List<Agent> getAgentsNearby(double x, double y) {
+    public List<Entity> getEntitiesNearby(double x, double y) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public List<Agent> getAgentsNearby(Point position) {
+    public List<Entity> getEntitiesNearby(Point position) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }
