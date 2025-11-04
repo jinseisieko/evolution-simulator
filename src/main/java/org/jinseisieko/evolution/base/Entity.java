@@ -30,6 +30,7 @@ public class Entity extends Circle {
     private double acceleration;
     private double angularSpeed;
     private final BasicSimulation simulation;
+    private boolean alive;
 
     /**
      * Constructs an entity at the specified initial coordinates with a given size (radius).
@@ -50,6 +51,7 @@ public class Entity extends Circle {
         this.acceleration = 0;
         this.angularSpeed = 0;
         this.simulation = simulation;
+        this.alive = true;
     }
 
     /**
@@ -246,5 +248,23 @@ public class Entity extends Circle {
      */
     public BasicSimulation getSimulation() {
         return simulation;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    /**
+     * Simulate the depth of this entity.
+     * 
+     * @throws IllegalStateException if this entity has already died. 
+     * 
+     * @author jinseisieko
+     */
+    public void kill() {
+        if (!alive) {
+            throw new IllegalStateException("Entity cannot die more then one time");
+        }
+        alive = false;
     }
 }
