@@ -261,7 +261,7 @@ public class Entity extends Circle {
      * 
      * @author jinseisieko
      */
-    public void kill() {
+    public void die() {
         if (!alive) {
             throw new IllegalStateException("Entity cannot die more then one time");
         }

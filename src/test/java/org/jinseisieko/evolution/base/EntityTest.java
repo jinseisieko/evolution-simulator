@@ -348,4 +348,31 @@ class EntityTest {
         assertEquals(0.5, entity.getRadius(), 1e-12);
         assertEquals(ShapeType.CIRCLE, entity.getShapeType());
     }
+
+    // === Entity alive ===
+
+    /**
+     * Confirms that {@code Entity} can die
+     */
+    @Test
+    void entity_canDie() {
+        Entity entity = new Entity(0.0, 0.0, 0.01, null);
+        entity.die();
+        assertFalse(entity.isAlive());
+    }
+
+    /**
+     * Confirms that {@code Entity} cannot die twice
+     */
+    @Test
+    void entity_cannotDieTwice() {
+        Entity entity = new Entity(0.0, 0.0, 0.01, null);
+        entity.die();
+        assertFalse(entity.isAlive());
+        IllegalStateException ex = assertThrows(IllegalStateException.class, () -> {
+            entity.die();
+        });
+        assertNotNull(ex.getMessage());
+        assertFalse(ex.getMessage().isBlank());
+    }
 }
