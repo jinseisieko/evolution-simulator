@@ -56,12 +56,16 @@ public class SimulationView extends JPanel {
         );
 
         // Делегируем отрисовку модели (или рисуем здесь, если модель не знает о графике)
-        simulation.draw(graphics2D);
+        // simulation.draw(graphics2D);
 
         graphics2D.dispose();
     }
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public BasicSimulation getSimulation() {
+        return simulation;
     }
 }
