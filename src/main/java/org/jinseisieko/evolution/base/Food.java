@@ -16,6 +16,7 @@ public class Food extends Entity {
     @Override
     public void updateEntity(double dt) {
         this.health -= TIME_HEALTH_COST;
+        if (this.health <= 0) this.die();
     }
 
     public double getHealth() {

@@ -91,10 +91,11 @@ class AgentTest {
         assertEquals(-10.0, ta.getSpeed(), 1e-12); // from SecondStatus
 
         for (int i = 0; i < 10000; i++) {
-            ta.updateEntity(0.04);
+            ta.updateEntity(0.1);
+            if (!ta.isAlive()) break;
         }
 
-        assertFalse(ta.getEnergy() > 0);
+        assertFalse(ta.isAlive());
     }
 
     /**
@@ -139,8 +140,9 @@ class AgentTest {
 
         for (int i = 0; i < 3000; i++) {
             eaa.updateEntity(0.1);
+            if (!eaa.isAlive()) break;
         }
 
-        assertFalse(eaa.getEnergy() > 0);
+        assertFalse(eaa.isAlive());
     }
 }

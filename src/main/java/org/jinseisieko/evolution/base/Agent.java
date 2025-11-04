@@ -29,6 +29,7 @@ public abstract class Agent extends Entity implements Answerer {
     private double brainUpdateTime;
     private double brainTimer = 0.0;
     private double energy; // [0, 1]
+    private double health; // [0, 1]
     private final double BRAIN_ENERGY_COST;
     private final double SPEED_ENERGY_COST;
     private final double ANGULAR_SPEED_ENERGY_COST;
@@ -82,6 +83,7 @@ public abstract class Agent extends Entity implements Answerer {
             throw new IllegalArgumentException("ANGULAR_SPEED_ENERGY_COST cannot be less than zero");
         }
         this.ANGULAR_SPEED_ENERGY_COST = ANGULAR_SPEED_ENERGY_COST;
+        this.health = 1.0;
     }
 
     /**
@@ -245,5 +247,15 @@ public abstract class Agent extends Entity implements Answerer {
         this.energy -= SPEED_ENERGY_COST * this.getSpeed() * dt;
         this.energy -= ANGULAR_SPEED_ENERGY_COST * this.getAngularSpeed() * dt;
         super.updateEntity(dt);
+
+        if (this.energy <= 0 || this.health <= 0) this.die();
+    }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
     }
 }
