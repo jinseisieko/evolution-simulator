@@ -18,9 +18,11 @@ public class Simulation implements BasicSimulation {
         for (Entity elem : entities) {
             elem.updateEntity(deltaTime);
         }
+        entities.removeIf((a) -> !a.isAlive());
     }
 
     public void addAgent(Agent agent) {
+        agent.setSimulation(this);
         this.entities.add(agent);
     }
 

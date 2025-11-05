@@ -29,7 +29,7 @@ public class Entity extends Circle {
     private double speed;
     private double acceleration;
     private double angularSpeed;
-    private final BasicSimulation simulation;
+    private BasicSimulation simulation;
     private boolean alive;
 
     /**
@@ -266,5 +266,9 @@ public class Entity extends Circle {
             throw new IllegalStateException("Entity cannot die more then one time");
         }
         alive = false;
+    }
+
+    public void setSimulation(BasicSimulation simulation) {
+        this.simulation = simulation;
     }
 }
