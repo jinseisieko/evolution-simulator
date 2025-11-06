@@ -17,7 +17,8 @@ public class EnergyAwareAgent extends Agent {
             null,
             0.02, // BRAIN_ENERGY_COST
             0.01, // SPEED_ENERGY_COST
-            0.005 // ANGULAR_SPEED_ENERGY_COST
+            0.005, // ANGULAR_SPEED_ENERGY_COST
+            0.01 // EAT_FOOD_ENERGY_COST
         );
     }
 

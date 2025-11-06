@@ -33,6 +33,7 @@ public abstract class Agent extends Entity implements Answerer {
     private final double BRAIN_ENERGY_COST;
     private final double SPEED_ENERGY_COST;
     private final double ANGULAR_SPEED_ENERGY_COST;
+    private final double EAT_FOOD_ENERGY_COST;
 
     /**
      * Constructs an agent with the specified initial state and energy cost parameters.
@@ -57,7 +58,8 @@ public abstract class Agent extends Entity implements Answerer {
             BasicSimulation simulation,
             double BRAIN_ENERGY_COST,
             double SPEED_ENERGY_COST, 
-            double ANGULAR_SPEED_ENERGY_COST
+            double ANGULAR_SPEED_ENERGY_COST,
+            double EAT_FOOD_ENERGY_COST
         ) {
         super(initialCoordinates, radius, simulation);
         if (brainUpdateTime <= 0) {
@@ -83,6 +85,11 @@ public abstract class Agent extends Entity implements Answerer {
             throw new IllegalArgumentException("ANGULAR_SPEED_ENERGY_COST cannot be less than zero");
         }
         this.ANGULAR_SPEED_ENERGY_COST = ANGULAR_SPEED_ENERGY_COST;
+
+        if (EAT_FOOD_ENERGY_COST < 0) {
+            throw new IllegalArgumentException("EAT_FOOD_ENERGY_COST cannot be less than zero");
+        }
+        this.EAT_FOOD_ENERGY_COST = EAT_FOOD_ENERGY_COST;
         this.health = 1.0;
     }
 
@@ -258,4 +265,10 @@ public abstract class Agent extends Entity implements Answerer {
     public void setHealth(double health) {
         this.health = health;
     }
+
+    public void eatFood(Food food) {
+        food.beEatenBy(this);
+        this.energy -= EAT_FOOD_ENERGY_COST;
+    }
+
 }
