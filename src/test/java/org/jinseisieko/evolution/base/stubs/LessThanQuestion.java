@@ -3,7 +3,7 @@ package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Question;
 
-public final class LessThanQuestion implements Question {
+public final class LessThanQuestion extends Question {
     private final int number;
 
     public LessThanQuestion(int number) {

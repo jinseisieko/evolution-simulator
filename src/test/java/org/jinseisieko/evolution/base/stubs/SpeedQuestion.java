@@ -3,7 +3,7 @@ package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Question;
 
-public final class SpeedQuestion implements Question {
+public final class SpeedQuestion extends Question {
     private final double threshold;
 
     public SpeedQuestion(double threshold) {

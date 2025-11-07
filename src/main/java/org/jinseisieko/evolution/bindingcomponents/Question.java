@@ -13,7 +13,7 @@ package org.jinseisieko.evolution.bindingcomponents;
  *
  * @author jinseisieko
  */
-public interface Question {
+public abstract  class Question {
     /**
      * Compares this question with another object for equality.
      * <p>
@@ -23,7 +23,7 @@ public interface Question {
      * @return {@code true} if the objects are equal, {@code false} otherwise <p>
      */
     @Override
-    boolean equals(Object obj);
+    public abstract boolean equals(Object obj);
 
     /**
      * Returns a hash code value consistent with {@link #equals(Object)}.
@@ -31,5 +31,5 @@ public interface Question {
      * @return a hash code value <p>
      */
     @Override
-    int hashCode();
+    public abstract int hashCode();
 }
