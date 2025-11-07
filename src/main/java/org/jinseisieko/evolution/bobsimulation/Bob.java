@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import org.jinseisieko.evolution.base.Agent;
 import org.jinseisieko.evolution.base.BasicSimulation;
 import org.jinseisieko.evolution.base.Brain;
+import org.jinseisieko.evolution.base.ResponsibleQuestion;
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Question;
 import org.jinseisieko.evolution.view.DrawStyle;
@@ -17,8 +18,7 @@ public class Bob extends Agent implements Drawable {
         super(initialCoordinates, radius, brainUpdateTime, brain, simulation, BRAIN_ENERGY_COST, SPEED_ENERGY_COST, ANGULAR_SPEED_ENERGY_COST, EAT_FOOD_ENERGY_COST);
     }
 
-    @Override
-    public boolean answer(Question question) {
+    public boolean answer(ResponsibleQuestion question) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -29,7 +29,7 @@ public class Bob extends Agent implements Drawable {
 
     @Override
     public double getSize() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.getRadius();
     }
 
     @Override
@@ -40,6 +40,13 @@ public class Bob extends Agent implements Drawable {
     @Override
     public void draw(Graphics2D g2d, int pixelX, int pixelY, int pixelSize) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean answer(Question question) {
+        if (question instanceof ResponsibleQuestion responsibleQuestion) {
+            return this.answer(responsibleQuestion);
+        } else throw new UnsupportedOperationException("This class works only with ResponsibleQuestion");
     }
     
 }
