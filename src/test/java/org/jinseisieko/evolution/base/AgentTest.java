@@ -145,4 +145,15 @@ class AgentTest {
 
         assertFalse(eaa.isAlive());
     }
+
+    @Test
+    void energyAwareAgent_interactsWithFoodExactly() {
+        Point point = new Point(0.0, 0.0);
+        EnergyAwareAgent eaa = new EnergyAwareAgent(point, 0.01);
+        Food food = new Food(point, 0.01, null, 0.01, 0.1);
+        eaa.eatFood(food);
+        assertEquals(1.09, eaa.getEnergy(), 1e-12);
+        assertFalse(food.isAlive());
+
+    }
 }

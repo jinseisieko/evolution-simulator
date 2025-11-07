@@ -267,6 +267,9 @@ public abstract class Agent extends Entity implements Answerer {
     }
 
     public void eatFood(Food food) {
+        if (!this.isAlive()) {
+            throw new IllegalStateException("Food cannot be eaten while it is died");
+        }
         food.beEatenBy(this);
         this.energy -= EAT_FOOD_ENERGY_COST;
     }
