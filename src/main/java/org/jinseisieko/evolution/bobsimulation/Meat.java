@@ -1,29 +1,28 @@
-// src/main/java/org/jinseisieko/evolution/simulation/Bob.java
-package org.jinseisieko.evolution.simulation;
+// src/main/java/org/jinseisieko/evolution/bobsimulation/Meat.java
+package org.jinseisieko.evolution.bobsimulation;
 
 import java.awt.Graphics2D;
 
-import org.jinseisieko.evolution.base.Agent;
 import org.jinseisieko.evolution.base.BasicSimulation;
-import org.jinseisieko.evolution.base.Brain;
+import org.jinseisieko.evolution.base.Food;
 import org.jinseisieko.evolution.basic.Point;
-import org.jinseisieko.evolution.bindingcomponents.Question;
+import org.jinseisieko.evolution.basic.ShapeType;
 import org.jinseisieko.evolution.view.DrawStyle;
 import org.jinseisieko.evolution.view.Drawable;
 
-public class Bob extends Agent implements Drawable {
+public class Meat extends Food implements Drawable {
 
-    public Bob(Point initialCoordinates, double radius, double brainUpdateTime, Brain brain, BasicSimulation simulation, double BRAIN_ENERGY_COST, double SPEED_ENERGY_COST, double ANGULAR_SPEED_ENERGY_COST, double EAT_FOOD_ENERGY_COST) {
-        super(initialCoordinates, radius, brainUpdateTime, brain, simulation, BRAIN_ENERGY_COST, SPEED_ENERGY_COST, ANGULAR_SPEED_ENERGY_COST, EAT_FOOD_ENERGY_COST);
+    public Meat(Point initialCoordinates, double radius, BasicSimulation simulation, double TIME_HEALTH_COST, double ENERGY_VALUE) {
+        super(initialCoordinates, radius, simulation, TIME_HEALTH_COST, ENERGY_VALUE);
     }
 
     @Override
-    public boolean answer(Question question) {
+    public double getX() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void statusActivity() {
+    public double getY() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -41,6 +40,10 @@ public class Bob extends Agent implements Drawable {
     public void draw(Graphics2D g2d, int pixelX, int pixelY, int pixelSize) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public ShapeType getShapeType() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }
-
