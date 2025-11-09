@@ -13,7 +13,7 @@ package org.jinseisieko.evolution.bindingcomponents;
  *
  * @author jinseisieko
  */
-public abstract  class Question {
+public abstract class Question {
     /**
      * Compares this question with another object for equality.
      * <p>

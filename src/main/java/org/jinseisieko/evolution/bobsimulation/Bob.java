@@ -23,7 +23,7 @@ public class Bob extends Agent implements Drawable {
     }
 
     @Override
-    public void statusActivity() {
+    public void statusActivity(double dt) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

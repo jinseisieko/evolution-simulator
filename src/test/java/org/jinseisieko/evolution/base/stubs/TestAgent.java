@@ -28,7 +28,7 @@ public class TestAgent extends Agent {
     }
 
     @Override
-    public void statusActivity() {
+    public void statusActivity(double st) {
         if (this.getLocalStatus() instanceof FirstStatus) {    
             this.setSpeed(10);        
         }

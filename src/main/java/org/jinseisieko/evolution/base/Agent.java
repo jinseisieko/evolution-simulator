@@ -211,7 +211,7 @@ public abstract class Agent extends Entity implements Answerer {
      *
      * @author jinseisieko
      */
-    public abstract void statusActivity();
+    public abstract void statusActivity(double dt);
 
     /**
      * Invokes the brain to determine a new status based on the agent's current state.
@@ -250,7 +250,7 @@ public abstract class Agent extends Entity implements Answerer {
             this.useBrain();
             this.brainTimer = 0;
         }
-        this.statusActivity();
+        this.statusActivity(dt);
         this.energy -= SPEED_ENERGY_COST * this.getSpeed() * dt;
         this.energy -= ANGULAR_SPEED_ENERGY_COST * this.getAngularSpeed() * dt;
         super.updateEntity(dt);

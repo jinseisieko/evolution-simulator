@@ -37,7 +37,7 @@ public class EnergyAwareAgent extends Agent {
     }
 
     @Override
-    public void statusActivity() {
+    public void statusActivity(double dt) {
         if (this.getLocalStatus() instanceof AccelerateStatus) {
             this.setAcceleration(2.0);
         } else if (this.getLocalStatus() instanceof MockStatus) {

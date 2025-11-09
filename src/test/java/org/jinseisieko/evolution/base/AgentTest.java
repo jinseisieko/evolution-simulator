@@ -59,7 +59,7 @@ class AgentTest {
         assertEquals(0.0, ta.getAngularSpeed(), 1e-12);
 
         // statusActivity should not change physical state before brain is used
-        ta.statusActivity();
+        ta.statusActivity(0.1);
         assertEquals(0.0, ta.getSpeed(), 1e-12);
 
         // First brain use: number=3 < 10 → FirstStatus, energy -= 0.01
@@ -123,7 +123,7 @@ class AgentTest {
         assertEquals(0.0, eaa.getAngle(), 1e-12);
         assertEquals(0.0, eaa.getAngularSpeed(), 1e-12);
 
-        eaa.statusActivity();
+        eaa.statusActivity(0.1);
         assertTrue(eaa.getBrain() instanceof AdaptiveBrain);
         assertEquals(0.0, eaa.getX(), 1e-12);
         assertEquals(0.0, eaa.getY(), 1e-12);

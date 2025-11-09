@@ -4,5 +4,5 @@ package org.jinseisieko.evolution.base;
 import org.jinseisieko.evolution.bindingcomponents.Status;
 
 public interface ResponsibleStatus extends Status {
-    void applyThisStatus(Agent agent);
+    void applyThisStatus(Agent agent, double dt);
 }
