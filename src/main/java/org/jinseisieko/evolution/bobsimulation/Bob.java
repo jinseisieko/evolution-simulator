@@ -19,7 +19,7 @@ public class Bob extends Agent implements Drawable {
     }
 
     public boolean answer(ResponsibleQuestion question) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return question.apply(this);
     }
 
     @Override
