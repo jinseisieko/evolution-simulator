@@ -26,13 +26,17 @@ public class TryToEatAndSwitchTo implements ResponsibleStatus {
             .filter(e -> e instanceof Food)
             .map(e -> (Food) e)
             .toList();
+        Food nearestFood = foods.getFirst();
+        double cDistance = Double.MAX_VALUE; 
         for (Food food : foods) {
             double distance = Point.distanceBetween(agent.getPosition(), food.getPosition());
-            if (distance < agent.getRadius() + food.getRadius() + 0.01) {
-                food.beEatenBy(agent);
+            if (cDistance > distance) {
+                nearestFood = food;
+                cDistance = distance;
             }
-            agent.setLocalStatus(nextStatus);
         }
+        if (cDistance < agent.getRadius() + nearestFood.getRadius() + 0.01) nearestFood.beEatenBy(agent);
+        agent.setLocalStatus(nextStatus);
     }
 
     public ResponsibleStatus getNextStatus() {
