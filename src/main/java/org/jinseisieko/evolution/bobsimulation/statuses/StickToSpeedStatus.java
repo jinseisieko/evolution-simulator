@@ -5,8 +5,8 @@ import org.jinseisieko.evolution.base.Agent;
 import org.jinseisieko.evolution.base.ResponsibleStatus;
 
 public class StickToSpeedStatus implements ResponsibleStatus {
-    private final double speed;
-    private final double maxAcceleration;
+    private double speed;
+    private double maxAcceleration;
 
     public StickToSpeedStatus(double speed, double maxAcceleration) {
         this.speed = speed;
@@ -19,6 +19,22 @@ public class StickToSpeedStatus implements ResponsibleStatus {
         if (current < speed) {
             agent.setAcceleration(maxAcceleration * (speed - current));
         }
+    }
+
+    public double getMaxAcceleration() {
+        return maxAcceleration;
+    }
+
+    public void setMaxAcceleration(double maxAcceleration) {
+        this.maxAcceleration = maxAcceleration;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
 }
