@@ -7,6 +7,7 @@ import org.jinseisieko.evolution.base.Agent;
 import org.jinseisieko.evolution.base.BasicSimulation;
 import org.jinseisieko.evolution.base.Brain;
 import org.jinseisieko.evolution.base.ResponsibleQuestion;
+import org.jinseisieko.evolution.base.ResponsibleStatus;
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Question;
 import org.jinseisieko.evolution.view.DrawStyle;
@@ -24,7 +25,7 @@ public class Bob extends Agent implements Drawable {
 
     @Override
     public void statusActivity(double dt) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ((ResponsibleStatus) getLocalStatus()).applyThisStatus(this, dt);
     }
 
     @Override
