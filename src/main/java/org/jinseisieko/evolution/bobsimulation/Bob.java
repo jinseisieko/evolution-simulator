@@ -1,6 +1,7 @@
 // src/main/java/org/jinseisieko/evolution/bobsimulation/Bob.java
 package org.jinseisieko.evolution.bobsimulation;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import org.jinseisieko.evolution.base.Agent;
@@ -14,6 +15,7 @@ import org.jinseisieko.evolution.view.DrawStyle;
 import org.jinseisieko.evolution.view.Drawable;
 
 public class Bob extends Agent implements Drawable {
+    static final DrawStyle DRAW_STYLE = DrawStyle.filled(Color.BLACK);
 
     public Bob(Point initialCoordinates, double radius, double brainUpdateTime, Brain brain, BasicSimulation simulation, double BRAIN_ENERGY_COST, double SPEED_ENERGY_COST, double ANGULAR_SPEED_ENERGY_COST, double EAT_FOOD_ENERGY_COST) {
         super(initialCoordinates, radius, brainUpdateTime, brain, simulation, BRAIN_ENERGY_COST, SPEED_ENERGY_COST, ANGULAR_SPEED_ENERGY_COST, EAT_FOOD_ENERGY_COST);
@@ -35,12 +37,12 @@ public class Bob extends Agent implements Drawable {
 
     @Override
     public DrawStyle getStyle() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return DRAW_STYLE;
     }
 
     @Override
     public void draw(Graphics2D g2d, int pixelX, int pixelY, int pixelSize) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        g2d.drawOval(pixelX-pixelSize, pixelY-pixelSize, pixelX+pixelSize, pixelY+pixelSize);
     }
 
     @Override
