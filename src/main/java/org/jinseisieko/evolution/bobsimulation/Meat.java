@@ -11,7 +11,7 @@ import org.jinseisieko.evolution.view.DrawStyle;
 import org.jinseisieko.evolution.view.Drawable;
 
 public class Meat extends Food implements Drawable {
-    static final DrawStyle DRAW_STYLE = DrawStyle.filled(Color.ORANGE);
+    static final DrawStyle DRAW_STYLE = DrawStyle.solid(Color.ORANGE);
 
     public Meat(Point initialCoordinates, double radius, BasicSimulation simulation, double TIME_HEALTH_COST, double ENERGY_VALUE) {
         super(initialCoordinates, radius, simulation, TIME_HEALTH_COST, ENERGY_VALUE);
@@ -29,6 +29,6 @@ public class Meat extends Food implements Drawable {
 
     @Override
     public void draw(Graphics2D g2d, int pixelX, int pixelY, int pixelSize) {
-        g2d.drawOval(pixelX-pixelSize, pixelY-pixelSize, pixelX+pixelSize, pixelY+pixelSize);
+        g2d.drawOval(pixelX, pixelY, pixelSize, pixelSize);
     }
 }

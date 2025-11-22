@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,8 +13,8 @@ import javax.swing.Timer;
 import org.jinseisieko.evolution.base.DrawableBasicSimulation;
 
 public class SimulationView extends JPanel {
-    private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 600;
+    private static final int WINDOW_WIDTH = 1200;
+    private static final int WINDOW_HEIGHT = 1200;
 
     private final DrawableBasicSimulation simulation;
     private Viewport viewport;
@@ -28,7 +27,7 @@ public class SimulationView extends JPanel {
 
     public SimulationView(DrawableBasicSimulation simulation, JFrame frame) {
         this.simulation = simulation;
-        this.viewport = new Viewport(WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0);
+        this.viewport = new Viewport(WINDOW_WIDTH, WINDOW_WIDTH, 0, 0);
         this.frame = frame;
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setBackground(Color.WHITE);
@@ -44,14 +43,14 @@ public class SimulationView extends JPanel {
             // FPS
             frameCount++;
             if (System.currentTimeMillis() - lastFpsTime >= 1000) {
-                frame.setTitle("Evolution simulator — FPS: " + frameCount);
+                System.out.println("Evolution simulator — FPS: " + frameCount);
                 frameCount = 0;
                 lastFpsTime = System.currentTimeMillis();
             }
 
             repaint();
         });
-        timer.setDelay(0);
+        timer.setDelay(10);
         timer.start();
     }
 
@@ -59,10 +58,10 @@ public class SimulationView extends JPanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics.create();
-        graphics2D.setRenderingHint(
-            RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON
-        );
+        // graphics2D.setRenderingHint(
+        //     RenderingHints.KEY_ANTIALIASING,
+        //     RenderingHints.VALUE_ANTIALIAS_ON
+        // );
         viewport.updateGraphics2D(graphics2D);
 
         // Делегируем отрисовку модели (или рисуем здесь, если модель не знает о графике)

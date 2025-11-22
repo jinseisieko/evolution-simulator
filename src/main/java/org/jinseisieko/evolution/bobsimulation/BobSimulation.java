@@ -12,11 +12,8 @@ import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Question;
 import org.jinseisieko.evolution.bindingcomponents.Status;
 import org.jinseisieko.evolution.bobsimulation.questions.DistanceToTheNearestFoodQuestion;
-import org.jinseisieko.evolution.bobsimulation.questions.EnergyQuestion;
-import org.jinseisieko.evolution.bobsimulation.questions.SpeedQuestion;
 import org.jinseisieko.evolution.bobsimulation.statuses.RotateStatus;
 import org.jinseisieko.evolution.bobsimulation.statuses.StickToSpeedStatus;
-import org.jinseisieko.evolution.bobsimulation.statuses.TryToEatAndSwitchTo;
 import org.jinseisieko.evolution.view.Drawable;
 
 public class BobSimulation extends Simulation implements DrawableBasicSimulation {
@@ -28,32 +25,19 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
     static final double SPEED_ENERGY_COST = 0.01;
     static final double ANGULAR_SPEED_ENERGY_COST = 0.01;
     static final double EAT_FOOD_ENERGY_COST = 0.01;
-    static final double MEAT_TIME_HEALTH_COST = 0.01;
+    static final double MEAT_TIME_HEALTH_COST = 0;
     static final double MEAT_ENERGY_VALUE = 0.1;
     static Question[] questions = {
         new DistanceToTheNearestFoodQuestion(0.1),
         new DistanceToTheNearestFoodQuestion(0.05),
         new DistanceToTheNearestFoodQuestion(0.025),
         new DistanceToTheNearestFoodQuestion(BOB_RADIUS),
-        new EnergyQuestion(0.5),
-        new EnergyQuestion(0.25),
-        new EnergyQuestion(0.1),
-        new EnergyQuestion(0.75),
-        new SpeedQuestion(0.05),
-        new SpeedQuestion(0.02),
-        new SpeedQuestion(0.03),
-        new SpeedQuestion(0.04)
     };
     static Status[] statuses = {
         new RotateStatus(0.1),
-        new RotateStatus(0.2),
-        new RotateStatus(0.3),
-        new StickToSpeedStatus(0.03, 0.01),
-        new StickToSpeedStatus(0.04, 0.01),
-        new StickToSpeedStatus(0.05, 0.01),
-        new TryToEatAndSwitchTo(new RotateStatus(0.3)),
-        new TryToEatAndSwitchTo(new StickToSpeedStatus(0.03, 0.01)),
-        new TryToEatAndSwitchTo(new TryToEatAndSwitchTo(new RotateStatus(0.3)))
+        new RotateStatus(-0.1),
+        new StickToSpeedStatus(0.1, 0.1),
+        new StickToSpeedStatus(-0.1, 0.1),
     };
     private final List<Drawable> drawables;
 
@@ -95,10 +79,10 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
     public static BobSimulation create() {
         BobSimulation simulation = new BobSimulation();
         Random r = new Random();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2000; i++) {
             simulation.spawnRandomBob(r.nextDouble()%1.0, r.nextDouble()%1.0);
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             simulation.spawnMeat(r.nextDouble()%1.0, r.nextDouble()%1.0);
         }
         return simulation;

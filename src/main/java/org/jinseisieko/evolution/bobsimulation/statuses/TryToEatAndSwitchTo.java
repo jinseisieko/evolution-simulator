@@ -4,11 +4,11 @@ package org.jinseisieko.evolution.bobsimulation.statuses;
 
 import java.util.List;
 
-import org.jinseisieko.evolution.base.Entity;
-import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.base.Agent;
+import org.jinseisieko.evolution.base.Entity;
 import org.jinseisieko.evolution.base.Food;
 import org.jinseisieko.evolution.base.ResponsibleStatus;
+import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bobsimulation.BobSimulation;
 
 public class TryToEatAndSwitchTo implements ResponsibleStatus {
@@ -26,16 +26,18 @@ public class TryToEatAndSwitchTo implements ResponsibleStatus {
             .filter(e -> e instanceof Food)
             .map(e -> (Food) e)
             .toList();
-        Food nearestFood = foods.getFirst();
-        double cDistance = Double.MAX_VALUE; 
-        for (Food food : foods) {
-            double distance = Point.distanceBetween(agent.getPosition(), food.getPosition());
-            if (cDistance > distance) {
-                nearestFood = food;
-                cDistance = distance;
+        if (!foods.isEmpty()) {
+            Food nearestFood = foods.getFirst();
+            double cDistance = Double.MAX_VALUE; 
+            for (Food food : foods) {
+                double distance = Point.distanceBetween(agent.getPosition(), food.getPosition());
+                if (cDistance > distance) {
+                    nearestFood = food;
+                    cDistance = distance;
+                }
             }
+            if (cDistance < agent.getRadius() + nearestFood.getRadius() + 0.01) nearestFood.beEatenBy(agent);
         }
-        if (cDistance < agent.getRadius() + nearestFood.getRadius() + 0.01) nearestFood.beEatenBy(agent);
         agent.setLocalStatus(nextStatus);
     }
 
