@@ -1,9 +1,15 @@
 // src/main/java/org/jinseisieko/evolution/view/SimulationView.java
 package org.jinseisieko.evolution.view;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import org.jinseisieko.evolution.base.DrawableBasicSimulation;
 
@@ -12,6 +18,7 @@ public class SimulationView extends JPanel {
     private static final int WINDOW_HEIGHT = 600;
 
     private final DrawableBasicSimulation simulation;
+    private Viewport viewport;
     private final JFrame frame;
 
     // Временные переменные для анимации
@@ -21,6 +28,7 @@ public class SimulationView extends JPanel {
 
     public SimulationView(DrawableBasicSimulation simulation, JFrame frame) {
         this.simulation = simulation;
+        this.viewport = new Viewport(WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0);
         this.frame = frame;
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setBackground(Color.WHITE);
@@ -55,9 +63,10 @@ public class SimulationView extends JPanel {
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON
         );
+        viewport.updateGraphics2D(graphics2D);
 
         // Делегируем отрисовку модели (или рисуем здесь, если модель не знает о графике)
-        simulation.draw(graphics2D);
+        viewport.drawAll(simulation.getDrawables());
 
         graphics2D.dispose();
     }

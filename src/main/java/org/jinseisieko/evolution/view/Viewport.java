@@ -1,7 +1,7 @@
 // src/main/java/org/jinseisieko/evolution/view/Viewport.java
 package org.jinseisieko.evolution.view;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.List;
 
 /**
@@ -76,9 +76,7 @@ public class Viewport {
      * @author jinseisieko
      */
     public void draw(Drawable drawable) {
-        if (this.graphics2D == null) {
-            throw new IllegalStateException("graphics2D must be updated before drawing");
-        }
+        
         // Apply the object's visual style
         applyStyle(drawable.getStyle());
         // Convert logical coordinates and size to pixel values
@@ -89,8 +87,7 @@ public class Viewport {
         // Delegate actual rendering to the drawable object
         drawable.draw(graphics2D, pixelX, pixelY, pixelSize);
 
-        // Clear reference to avoid accidental reuse without reinitialization
-        this.graphics2D = null;
+        
     }
 
     /**
@@ -103,9 +100,14 @@ public class Viewport {
      * @author jinseisieko
      */
     public void drawAll(List<Drawable> drawables) {
+        if (this.graphics2D == null) {
+            throw new IllegalStateException("graphics2D must be updated before drawing");
+        }
         for (Drawable drawable : drawables) {
             draw(drawable);
         }
+        // Clear reference to avoid accidental reuse without reinitialization
+        this.graphics2D = null;
     }
 
     /**
