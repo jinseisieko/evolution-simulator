@@ -1,9 +1,10 @@
 // src/main/java/org/jinseisieko/evolution/base/Simulation.java
 package org.jinseisieko.evolution.base;
 
-import org.jinseisieko.evolution.basic.Point;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jinseisieko.evolution.basic.Point;
 
 public class Simulation implements BasicSimulation {
 
@@ -15,10 +16,18 @@ public class Simulation implements BasicSimulation {
 
     @Override
     public void update(double deltaTime) {
+        List<Entity> removed = new ArrayList<>();
         for (Entity elem : entities) {
             elem.updateEntity(deltaTime);
+            if (!elem.isAlive()) removed.add(elem);
         }
-        entities.removeIf((a) -> !a.isAlive());
+        for (Entity elem : removed) {
+            removeEntity(elem);
+        }
+    }
+
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
     }
 
     public void addAgent(Agent agent) {

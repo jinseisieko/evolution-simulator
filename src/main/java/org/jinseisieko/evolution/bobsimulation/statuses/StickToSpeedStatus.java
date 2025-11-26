@@ -13,12 +13,25 @@ public class StickToSpeedStatus implements ResponsibleStatus {
         this.maxAcceleration = maxAcceleration;
     }
 
-    @Override
+   @Override
     public void applyThisStatus(Agent agent, double dt) {
-        double current = agent.getSpeed();
-        if (current < speed) {
-            agent.setAcceleration(maxAcceleration * (speed - current));
+        if (dt <= 0) {
+            return;
         }
+
+        double current = agent.getSpeed();
+        double desiredAcceleration = (speed - current) / dt;
+
+        double actualAcceleration;
+        if (desiredAcceleration > maxAcceleration) {
+            actualAcceleration = maxAcceleration;
+        } else if (desiredAcceleration < -maxAcceleration) {
+            actualAcceleration = -maxAcceleration;
+        } else {
+            actualAcceleration = desiredAcceleration;
+        }
+
+        agent.setAcceleration(actualAcceleration);
     }
 
     public double getMaxAcceleration() {

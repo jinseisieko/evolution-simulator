@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.jinseisieko.evolution.base.DecisionTreeBrain;
 import org.jinseisieko.evolution.base.DrawableBasicSimulation;
+import org.jinseisieko.evolution.base.Entity;
 import org.jinseisieko.evolution.base.Simulation;
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Question;
@@ -20,10 +21,10 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
     static final double FOOD_RADIUS = 0.01;
     static final double BOB_RADIUS = 0.01;
     static final double BRAIN_UPDATE_TIME = 0.5;
-    static final int BRAIN_DEPTH = 10;
+    static final int BRAIN_DEPTH = 11;
     static final double BRAIN_ENERGY_COST = 0.01;
-    static final double SPEED_ENERGY_COST = 0.01;
-    static final double ANGULAR_SPEED_ENERGY_COST = 0.01;
+    static final double SPEED_ENERGY_COST = 0.1;
+    static final double ANGULAR_SPEED_ENERGY_COST = 10;
     static final double EAT_FOOD_ENERGY_COST = 0.01;
     static final double MEAT_TIME_HEALTH_COST = 0;
     static final double MEAT_ENERGY_VALUE = 0.1;
@@ -40,14 +41,15 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
         new DistanceToTheNearestFoodQuestion(BOB_RADIUS),
     };
     static Status[] statuses = {
+        new StickToSpeedStatus(1, 0.1),
+        new StickToSpeedStatus(1, 10),
+        new StickToSpeedStatus(0.1, 1),
+        new StickToSpeedStatus(-1, 1),
+        new StickToSpeedStatus(0.3, 0.1),
         new RotateStatus(0.1),
+        new RotateStatus(10),
         new RotateStatus(-0.1),
-        new StickToSpeedStatus(0.1, 0.1),
-        new StickToSpeedStatus(-0.1, 0.1),
-        new StickToSpeedStatus(0.1, 0.1),
-        new StickToSpeedStatus(-0.1, 0.1),
-        new StickToSpeedStatus(0.1, 0.1),
-        new StickToSpeedStatus(-0.1, 0.1),
+        new RotateStatus(-10),
     };
     private final List<Drawable> drawables;
 
@@ -78,7 +80,7 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
 
     public void spawnRandomBob(double x, double y) {
         Random random = new Random();
-        Bob bob = new Bob(new Point(x, y), BOB_RADIUS, BRAIN_UPDATE_TIME+random.nextDouble(0, 0.2), DecisionTreeBrain.createRandom(BRAIN_DEPTH, questions, statuses), this, BRAIN_ENERGY_COST, SPEED_ENERGY_COST, ANGULAR_SPEED_ENERGY_COST, EAT_FOOD_ENERGY_COST);
+        Bob bob = new Bob(new Point(x, y), BOB_RADIUS, BRAIN_UPDATE_TIME+random.nextDouble(0, 0.01), DecisionTreeBrain.createRandom(BRAIN_DEPTH, questions, statuses), this, BRAIN_ENERGY_COST, SPEED_ENERGY_COST, ANGULAR_SPEED_ENERGY_COST, EAT_FOOD_ENERGY_COST);
         this.addAgent(bob);
     }
 
@@ -97,5 +99,13 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
             simulation.spawnMeat(r.nextDouble()%1.0, r.nextDouble()%1.0);
         }
         return simulation;
+    }
+
+    @Override
+    public void removeEntity(Entity entity) {
+        super.removeEntity(entity);
+        if (entity instanceof Drawable drawable) {
+            drawables.remove(drawable);
+        }
     }
 }

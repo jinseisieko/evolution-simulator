@@ -17,7 +17,7 @@ public class SimulationView extends JPanel {
     private static final int WINDOW_HEIGHT = 1200;
 
     private final DrawableBasicSimulation simulation;
-    private Viewport viewport;
+    private final Viewport viewport;
     private final JFrame frame;
 
     // Временные переменные для анимации
@@ -50,7 +50,7 @@ public class SimulationView extends JPanel {
             simulation.update(deltaTime);
             repaint();
         });
-        timer.setDelay(0);
+        timer.setDelay(8);
         timer.start();
     }
 
