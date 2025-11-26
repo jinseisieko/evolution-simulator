@@ -38,7 +38,7 @@ public class SimulationView extends JPanel {
             double deltaTime = (now - lastUpdateTime) / 1_000_000_000.0;
             lastUpdateTime = now;
 
-            simulation.update(deltaTime); // обновляем модель
+             // обновляем модель
 
             // FPS
             frameCount++;
@@ -47,10 +47,10 @@ public class SimulationView extends JPanel {
                 frameCount = 0;
                 lastFpsTime = System.currentTimeMillis();
             }
-
+            simulation.update(deltaTime);
             repaint();
         });
-        timer.setDelay(10);
+        timer.setDelay(0);
         timer.start();
     }
 

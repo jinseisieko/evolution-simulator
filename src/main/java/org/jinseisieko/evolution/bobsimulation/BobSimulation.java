@@ -28,6 +28,12 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
     static final double MEAT_TIME_HEALTH_COST = 0;
     static final double MEAT_ENERGY_VALUE = 0.1;
     static Question[] questions = {
+        new DistanceToTheNearestFoodQuestion(0.5),
+        new DistanceToTheNearestFoodQuestion(0.3),
+        new DistanceToTheNearestFoodQuestion(0.2),
+        new DistanceToTheNearestFoodQuestion(0.5),
+        new DistanceToTheNearestFoodQuestion(0.3),
+        new DistanceToTheNearestFoodQuestion(0.2),
         new DistanceToTheNearestFoodQuestion(0.1),
         new DistanceToTheNearestFoodQuestion(0.05),
         new DistanceToTheNearestFoodQuestion(0.025),
@@ -36,6 +42,10 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
     static Status[] statuses = {
         new RotateStatus(0.1),
         new RotateStatus(-0.1),
+        new StickToSpeedStatus(0.1, 0.1),
+        new StickToSpeedStatus(-0.1, 0.1),
+        new StickToSpeedStatus(0.1, 0.1),
+        new StickToSpeedStatus(-0.1, 0.1),
         new StickToSpeedStatus(0.1, 0.1),
         new StickToSpeedStatus(-0.1, 0.1),
     };
@@ -67,7 +77,8 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
     }
 
     public void spawnRandomBob(double x, double y) {
-        Bob bob = new Bob(new Point(x, y), BOB_RADIUS, BRAIN_UPDATE_TIME, DecisionTreeBrain.createRandom(BRAIN_DEPTH, questions, statuses), this, BRAIN_ENERGY_COST, SPEED_ENERGY_COST, ANGULAR_SPEED_ENERGY_COST, EAT_FOOD_ENERGY_COST);
+        Random random = new Random();
+        Bob bob = new Bob(new Point(x, y), BOB_RADIUS, BRAIN_UPDATE_TIME+random.nextDouble(0, 0.2), DecisionTreeBrain.createRandom(BRAIN_DEPTH, questions, statuses), this, BRAIN_ENERGY_COST, SPEED_ENERGY_COST, ANGULAR_SPEED_ENERGY_COST, EAT_FOOD_ENERGY_COST);
         this.addAgent(bob);
     }
 
@@ -79,7 +90,7 @@ public class BobSimulation extends Simulation implements DrawableBasicSimulation
     public static BobSimulation create() {
         BobSimulation simulation = new BobSimulation();
         Random r = new Random();
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 1000; i++) {
             simulation.spawnRandomBob(r.nextDouble()%1.0, r.nextDouble()%1.0);
         }
         for (int i = 0; i < 100; i++) {
