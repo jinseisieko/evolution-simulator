@@ -1,5 +1,5 @@
-// src/main/java/org/jinseisieko/evolution/model/Brain.java
-package org.jinseisieko.evolution.model;
+// src/main/java/org/jinseisieko/evolution/base/Brain.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.bindingcomponents.Answerer;
 import org.jinseisieko.evolution.bindingcomponents.Status;

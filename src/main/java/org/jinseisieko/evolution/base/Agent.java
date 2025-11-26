@@ -1,5 +1,5 @@
-// src/main/java/org/jinseisieko/evolution/model/Agent.java
-package org.jinseisieko.evolution.model;
+// src/main/java/org/jinseisieko/evolution/base/Agent.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Answerer;
@@ -12,6 +12,13 @@ import org.jinseisieko.evolution.bindingcomponents.Status;
  * Each concrete subclass must implement {@link #statusActivity()} to define how the current
  * status influences the agent's behavior. Additionally, subclasses must implement
  * {@link #answer(Question)} to respond to questions posed during decision-making.
+ * <p>
+ * This class extends {@link Entity}, inheriting its physical properties (position, radius, 
+ * orientation, speed, acceleration, angular speed) and its integration with the 
+ * {@link BasicSimulation} environment. Agents participate in the simulation's update and 
+ * drawing cycles as part of the {@code BasicSimulation} entity collection. The agent's 
+ * state is updated over time by the simulation loop via the {@link #updateEntity(double)} 
+ * method, which integrates both physical motion and energy consumption.
  *
  * @author jinseisieko
  */
@@ -22,17 +29,20 @@ public abstract class Agent extends Entity implements Answerer {
     private double brainUpdateTime;
     private double brainTimer = 0.0;
     private double energy; // [0, 1]
+    private double health; // [0, 1]
     private final double BRAIN_ENERGY_COST;
     private final double SPEED_ENERGY_COST;
     private final double ANGULAR_SPEED_ENERGY_COST;
+    private final double EAT_FOOD_ENERGY_COST;
 
     /**
      * Constructs an agent with the specified initial state and energy cost parameters.
      *
      * @param initialCoordinates the starting position of the agent (will be normalized to [0,1)) <p>
-     * @param size the radius of the agent's body <p>
+     * @param radius the radius of the agent's body <p>
      * @param brainUpdateTime the interval (in seconds) between brain updates; must be positive <p>
      * @param brain the decision-making component; must not be null <p>
+     * @param simulation The simulation context this agent belongs to, passed to the parent {@code Entity} class. <p>
      * @param BRAIN_ENERGY_COST energy consumed each time the brain is used; must be non-negative <p>
      * @param SPEED_ENERGY_COST energy consumed per unit of linear speed per one time unit; must be non-negative <p>
      * @param ANGULAR_SPEED_ENERGY_COST energy consumed per unit of angular speed per one time unit; must be non-negative <p>
@@ -42,14 +52,16 @@ public abstract class Agent extends Entity implements Answerer {
      */
     public Agent(
             Point initialCoordinates,
-            double size,
+            double radius,
             double brainUpdateTime,
             Brain brain,
+            BasicSimulation simulation,
             double BRAIN_ENERGY_COST,
             double SPEED_ENERGY_COST, 
-            double ANGULAR_SPEED_ENERGY_COST
+            double ANGULAR_SPEED_ENERGY_COST,
+            double EAT_FOOD_ENERGY_COST
         ) {
-        super(initialCoordinates, size);
+        super(initialCoordinates, radius, simulation);
         if (brainUpdateTime <= 0) {
             throw new IllegalArgumentException("Brain update time should be more than zero");
         }
@@ -73,6 +85,12 @@ public abstract class Agent extends Entity implements Answerer {
             throw new IllegalArgumentException("ANGULAR_SPEED_ENERGY_COST cannot be less than zero");
         }
         this.ANGULAR_SPEED_ENERGY_COST = ANGULAR_SPEED_ENERGY_COST;
+
+        if (EAT_FOOD_ENERGY_COST < 0) {
+            throw new IllegalArgumentException("EAT_FOOD_ENERGY_COST cannot be less than zero");
+        }
+        this.EAT_FOOD_ENERGY_COST = EAT_FOOD_ENERGY_COST;
+        this.health = 1.0;
     }
 
     /**
@@ -193,7 +211,7 @@ public abstract class Agent extends Entity implements Answerer {
      *
      * @author jinseisieko
      */
-    public abstract void statusActivity();
+    public abstract void statusActivity(double dt);
 
     /**
      * Invokes the brain to determine a new status based on the agent's current state.
@@ -210,13 +228,16 @@ public abstract class Agent extends Entity implements Answerer {
     /**
      * Updates the agent's state over the given time interval.
      * <p>
-     * This method:
+     * This method extends the physical update behavior inherited from {@link Entity}
+     * by integrating the agent's decision-making and energy systems within the simulation loop.
+     * It performs the following actions:
      * <ul>
      *   <li>Triggers brain execution if enough time has passed since the last update</li>
      *   <li>Applies status-driven behavior via {@link #statusActivity()}</li>
      *   <li>Consumes energy proportional to current speed and angular speed</li>
-     *   <li>Updates position and orientation using physics from the superclass</li>
+     *   <li>Delegates the physical state update (position, orientation) to the parent {@code Entity.updateEntity(dt)} method.</li>
      * </ul>
+     * This ensures the agent's behavior and energy state evolve over time as part of the {@link BasicSimulation}.
      *
      * @param dt the time step duration in seconds <p>
      *
@@ -229,9 +250,28 @@ public abstract class Agent extends Entity implements Answerer {
             this.useBrain();
             this.brainTimer = 0;
         }
-        this.statusActivity();
+        this.statusActivity(dt);
         this.energy -= SPEED_ENERGY_COST * this.getSpeed() * dt;
         this.energy -= ANGULAR_SPEED_ENERGY_COST * this.getAngularSpeed() * dt;
         super.updateEntity(dt);
+
+        if (this.energy <= 0 || this.health <= 0) this.die();
     }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
+    public void eatFood(Food food) {
+        if (!this.isAlive()) {
+            throw new IllegalStateException("Food cannot be eaten while it is died");
+        }
+        food.beEatenBy(this);
+        this.energy -= EAT_FOOD_ENERGY_COST;
+    }
+
 }

@@ -1,5 +1,5 @@
-// src/test/java/org/jinseisieko/evolution/model/DecisionTreeBrain.java
-package org.jinseisieko.evolution.model;
+// src/test/java/org/jinseisieko/evolution/base/DecisionTreeBrainTest.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.bindingcomponents.Question;
 import org.jinseisieko.evolution.bindingcomponents.Status;

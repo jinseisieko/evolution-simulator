@@ -1,12 +1,13 @@
-package org.jinseisieko.evolution.model;
+// src/test/java/org/jinseisieko/evolution/base/AgentTest.java
+package org.jinseisieko.evolution.base;
 
 import org.jinseisieko.evolution.basic.Point;
-import org.jinseisieko.evolution.model.stubs.AdaptiveBrain;
-import org.jinseisieko.evolution.model.stubs.EnergyAwareAgent;
-import org.jinseisieko.evolution.model.stubs.FirstStatus;
-import org.jinseisieko.evolution.model.stubs.SecondStatus;
-import org.jinseisieko.evolution.model.stubs.SimpleBrain;
-import org.jinseisieko.evolution.model.stubs.TestAgent;
+import org.jinseisieko.evolution.base.stubs.AdaptiveBrain;
+import org.jinseisieko.evolution.base.stubs.EnergyAwareAgent;
+import org.jinseisieko.evolution.base.stubs.FirstStatus;
+import org.jinseisieko.evolution.base.stubs.SecondStatus;
+import org.jinseisieko.evolution.base.stubs.SimpleBrain;
+import org.jinseisieko.evolution.base.stubs.TestAgent;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,7 +59,7 @@ class AgentTest {
         assertEquals(0.0, ta.getAngularSpeed(), 1e-12);
 
         // statusActivity should not change physical state before brain is used
-        ta.statusActivity();
+        ta.statusActivity(0.1);
         assertEquals(0.0, ta.getSpeed(), 1e-12);
 
         // First brain use: number=3 < 10 → FirstStatus, energy -= 0.01
@@ -90,10 +91,11 @@ class AgentTest {
         assertEquals(-10.0, ta.getSpeed(), 1e-12); // from SecondStatus
 
         for (int i = 0; i < 10000; i++) {
-            ta.updateEntity(0.04);
+            ta.updateEntity(0.1);
+            if (!ta.isAlive()) break;
         }
 
-        assertFalse(ta.getEnergy() > 0);
+        assertFalse(ta.isAlive());
     }
 
     /**
@@ -121,7 +123,7 @@ class AgentTest {
         assertEquals(0.0, eaa.getAngle(), 1e-12);
         assertEquals(0.0, eaa.getAngularSpeed(), 1e-12);
 
-        eaa.statusActivity();
+        eaa.statusActivity(0.1);
         assertTrue(eaa.getBrain() instanceof AdaptiveBrain);
         assertEquals(0.0, eaa.getX(), 1e-12);
         assertEquals(0.0, eaa.getY(), 1e-12);
@@ -138,8 +140,20 @@ class AgentTest {
 
         for (int i = 0; i < 3000; i++) {
             eaa.updateEntity(0.1);
+            if (!eaa.isAlive()) break;
         }
 
-        assertFalse(eaa.getEnergy() > 0);
+        assertFalse(eaa.isAlive());
+    }
+
+    @Test
+    void energyAwareAgent_interactsWithFoodExactly() {
+        Point point = new Point(0.0, 0.0);
+        EnergyAwareAgent eaa = new EnergyAwareAgent(point, 0.01);
+        Food food = new Food(point, 0.01, null, 0.01, 0.1);
+        eaa.eatFood(food);
+        assertEquals(1.09, eaa.getEnergy(), 1e-12);
+        assertFalse(food.isAlive());
+
     }
 }

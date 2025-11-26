@@ -1,9 +1,9 @@
-// src/test/java/org/jinseisieko/evolution/model/stubs/SpeedQuestion.java
-package org.jinseisieko.evolution.model.stubs;
+// src/test/java/org/jinseisieko/evolution/base/stubs/SpeedQuestion.java
+package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Question;
 
-public final class SpeedQuestion implements Question {
+public final class SpeedQuestion extends Question {
     private final double threshold;
 
     public SpeedQuestion(double threshold) {

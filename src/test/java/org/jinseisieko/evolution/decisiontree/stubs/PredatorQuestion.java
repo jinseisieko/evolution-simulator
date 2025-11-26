@@ -3,7 +3,7 @@ package org.jinseisieko.evolution.decisiontree.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Question;
 
-public final class PredatorQuestion implements Question {
+public final class PredatorQuestion extends  Question {
     private final double radius;
 
     public PredatorQuestion(double radius) {

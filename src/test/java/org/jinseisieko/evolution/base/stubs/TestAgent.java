@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+// src/test/java/org/jinseisieko/evolution/base/stubs/TestAgent.java
 
-package org.jinseisieko.evolution.model.stubs;
+package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Question;
-import org.jinseisieko.evolution.model.Agent;
+import org.jinseisieko.evolution.base.Agent;
 
 /**
  *
@@ -18,7 +15,7 @@ public class TestAgent extends Agent {
     private int number;
 
     public TestAgent(Point initialCoordinates, double size, int number, double brainUpdateTime, double BRAIN_ENERGY_COST) {
-        super(initialCoordinates, size, brainUpdateTime, new SimpleBrain(), BRAIN_ENERGY_COST, 0.0, 0.0);
+        super(initialCoordinates, size, brainUpdateTime, new SimpleBrain(), null, BRAIN_ENERGY_COST, 0.0, 0.0, 0.0);
         this.number = number;
     }
 
@@ -31,7 +28,7 @@ public class TestAgent extends Agent {
     }
 
     @Override
-    public void statusActivity() {
+    public void statusActivity(double st) {
         if (this.getLocalStatus() instanceof FirstStatus) {    
             this.setSpeed(10);        
         }

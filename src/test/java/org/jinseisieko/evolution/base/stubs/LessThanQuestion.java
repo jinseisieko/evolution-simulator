@@ -1,9 +1,9 @@
-// src/test/java/org/jinseisieko/evolution/model/stubs/LessThanQuestion.java
-package org.jinseisieko.evolution.model.stubs;
+// src/test/java/org/jinseisieko/evolution/base/stubs/LessThanQuestion.java
+package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Question;
 
-public final class LessThanQuestion implements Question {
+public final class LessThanQuestion extends Question {
     private final int number;
 
     public LessThanQuestion(int number) {

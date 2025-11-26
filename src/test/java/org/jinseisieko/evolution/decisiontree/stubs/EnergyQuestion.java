@@ -3,7 +3,7 @@ package org.jinseisieko.evolution.decisiontree.stubs;
 
 import org.jinseisieko.evolution.bindingcomponents.Question;
 
-public final class EnergyQuestion implements Question {
+public final class EnergyQuestion extends  Question {
     private final double threshold;
 
     public EnergyQuestion(double threshold) {

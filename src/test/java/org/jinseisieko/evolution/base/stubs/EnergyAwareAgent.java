@@ -1,11 +1,11 @@
-// src/test/java/org/jinseisieko/evolution/model/stubs/EnergyAwareAgent.java
-package org.jinseisieko.evolution.model.stubs;
+// src/test/java/org/jinseisieko/evolution/base/stubs/FirstStatus.java
+package org.jinseisieko.evolution.base.stubs;
 
 import org.jinseisieko.evolution.basic.Point;
 import org.jinseisieko.evolution.bindingcomponents.Question;
 import org.jinseisieko.evolution.decisiontree.stubs.EnergyQuestion;
 import org.jinseisieko.evolution.decisiontree.stubs.MockStatus;
-import org.jinseisieko.evolution.model.Agent;
+import org.jinseisieko.evolution.base.Agent;
 
 public class EnergyAwareAgent extends Agent {
     public EnergyAwareAgent(Point initialCoordinates, double size) {
@@ -14,9 +14,11 @@ public class EnergyAwareAgent extends Agent {
             size,
             2.0, // brainUpdateTime
             new AdaptiveBrain(),
+            null,
             0.02, // BRAIN_ENERGY_COST
             0.01, // SPEED_ENERGY_COST
-            0.005 // ANGULAR_SPEED_ENERGY_COST
+            0.005, // ANGULAR_SPEED_ENERGY_COST
+            0.01 // EAT_FOOD_ENERGY_COST
         );
     }
 
@@ -35,7 +37,7 @@ public class EnergyAwareAgent extends Agent {
     }
 
     @Override
-    public void statusActivity() {
+    public void statusActivity(double dt) {
         if (this.getLocalStatus() instanceof AccelerateStatus) {
             this.setAcceleration(2.0);
         } else if (this.getLocalStatus() instanceof MockStatus) {
