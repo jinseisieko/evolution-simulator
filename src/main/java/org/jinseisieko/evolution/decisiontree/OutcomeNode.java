@@ -1,6 +1,9 @@
 // src/main/java/org/jinseisieko/evolution/decisiontree/OutcomeNode.java
 package org.jinseisieko.evolution.decisiontree;
 
+import org.jinseisieko.evolution.bindingcomponents.Answerer;
+import org.jinseisieko.evolution.bindingcomponents.Status;
+
 /**
  * Represents a leaf node in a binary decision tree that holds a final {@link Status}.
  * <p>

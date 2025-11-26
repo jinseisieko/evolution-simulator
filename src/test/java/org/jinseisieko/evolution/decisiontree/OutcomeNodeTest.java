@@ -1,6 +1,8 @@
 // src/test/java/org/jinseisieko/evolution/decisiontree/OutcomeNodeTest.java
 package org.jinseisieko.evolution.decisiontree;
 
+import org.jinseisieko.evolution.bindingcomponents.Answerer;
+import org.jinseisieko.evolution.bindingcomponents.Status;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.jinseisieko.evolution.decisiontree.stubs.MockStatus; // Assuming you have a MockStatus for testing

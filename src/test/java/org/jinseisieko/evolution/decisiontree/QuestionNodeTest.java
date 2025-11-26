@@ -1,6 +1,7 @@
 // src/test/java/org/jinseisieko/evolution/decisiontree/QuestionNodeTest.java
 package org.jinseisieko.evolution.decisiontree;
 
+import org.jinseisieko.evolution.bindingcomponents.Answerer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.jinseisieko.evolution.decisiontree.stubs.EnergyQuestion;

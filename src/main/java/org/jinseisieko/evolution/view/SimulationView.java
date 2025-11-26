@@ -1,16 +1,23 @@
 // src/main/java/org/jinseisieko/evolution/view/SimulationView.java
 package org.jinseisieko.evolution.view;
 
-import org.jinseisieko.evolution.simulation.Simulation;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import org.jinseisieko.evolution.base.DrawableBasicSimulation;
 
 public class SimulationView extends JPanel {
-    private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 600;
+    private static final int WINDOW_WIDTH = 1200;
+    private static final int WINDOW_HEIGHT = 1200;
 
-    private final Simulation simulation;
+    private final DrawableBasicSimulation simulation;
+    private final Viewport viewport;
     private final JFrame frame;
 
     // Временные переменные для анимации
@@ -18,8 +25,9 @@ public class SimulationView extends JPanel {
     private int frameCount = 0;
     private long lastFpsTime = System.currentTimeMillis();
 
-    public SimulationView(Simulation simulation, JFrame frame) {
+    public SimulationView(DrawableBasicSimulation simulation, JFrame frame) {
         this.simulation = simulation;
+        this.viewport = new Viewport(WINDOW_WIDTH, WINDOW_WIDTH, 0, 0);
         this.frame = frame;
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setBackground(Color.WHITE);
@@ -30,19 +38,19 @@ public class SimulationView extends JPanel {
             double deltaTime = (now - lastUpdateTime) / 1_000_000_000.0;
             lastUpdateTime = now;
 
-            simulation.update(deltaTime); // обновляем модель
+             // обновляем модель
 
             // FPS
             frameCount++;
             if (System.currentTimeMillis() - lastFpsTime >= 1000) {
-                frame.setTitle("Evolution simulator — FPS: " + frameCount);
+                System.out.println("Evolution simulator — FPS: " + frameCount);
                 frameCount = 0;
                 lastFpsTime = System.currentTimeMillis();
             }
-
+            simulation.update(deltaTime);
             repaint();
         });
-        timer.setDelay(0);
+        timer.setDelay(8);
         timer.start();
     }
 
@@ -50,18 +58,23 @@ public class SimulationView extends JPanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics.create();
-        graphics2D.setRenderingHint(
-            RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON
-        );
+        // graphics2D.setRenderingHint(
+        //     RenderingHints.KEY_ANTIALIASING,
+        //     RenderingHints.VALUE_ANTIALIAS_ON
+        // );
+        viewport.updateGraphics2D(graphics2D);
 
         // Делегируем отрисовку модели (или рисуем здесь, если модель не знает о графике)
-        simulation.draw(graphics2D);
+        viewport.drawAll(simulation.getDrawables());
 
         graphics2D.dispose();
     }
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public DrawableBasicSimulation getSimulation() {
+        return simulation;
     }
 }

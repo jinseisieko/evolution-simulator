@@ -1,9 +1,9 @@
 // src/test/java/org/jinseisieko/evolution/decisiontree/stubs/EnergyQuestion.java
 package org.jinseisieko.evolution.decisiontree.stubs;
 
-import org.jinseisieko.evolution.decisiontree.Question;
+import org.jinseisieko.evolution.bindingcomponents.Question;
 
-public final class EnergyQuestion implements Question {
+public final class EnergyQuestion extends  Question {
     private final double threshold;
 
     public EnergyQuestion(double threshold) {
@@ -24,5 +24,10 @@ public final class EnergyQuestion implements Question {
     @Override
     public int hashCode() {
         return Double.hashCode(threshold);
+    }
+
+    @Override
+    public String toString() {
+        return "EnergyQuestion{"+this.threshold+"}";
     }
 }
