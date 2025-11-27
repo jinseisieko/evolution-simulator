@@ -3,4 +3,4 @@ To compile:
 mvn package
 ```
 
-`target/evolution-simulator-<VERSION>.jar` - packaged
+`target/evolution-simulator-1.1.1.jar` - packaged
